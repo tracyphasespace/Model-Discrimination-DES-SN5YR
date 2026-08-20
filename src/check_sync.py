@@ -27,18 +27,41 @@ REQUIRED = {
                        "N_default", "N_official"],
 }
 
+# context anchors: the sign-critical leverages must appear in their
+# defining phrases, not merely somewhere in the file
+CONTEXT = {
+    "README.md": [
+        ("L_BBC anchored", ["L_BBC = released \u2212 preBBC = \u221211.7",
+                            "L_BBC = released - preBBC = -11.7",
+                            "L_BBC = released − preBBC = −11.7"]),
+    ],
+    "paper/main.tex": [
+        ("L_BBC anchored", ["L_{\\mathrm{BBC}} = 1.1 - 12.8 = -11.7"]),
+    ],
+}
+
 fail = 0
+for surface, anchors in CONTEXT.items():
+    text = open(os.path.join(ROOT, surface)).read()
+    for name, pats in anchors:
+        if not any(p in text for p in pats):
+            print(f"MISSING context anchor in {surface}: {name}")
+            fail += 1
+
 for surface, keys in REQUIRED.items():
     text = open(os.path.join(ROOT, surface)).read()
     for k in keys:
         v = M[k]
-        # match with or without leading sign/LaTeX minus
-        variants = [v, v.replace("-", "\u2212"), v.replace("-", ""),
-                    v.replace("+", "")]
+        # sign-strict: negatives match only with a minus (ASCII or LaTeX);
+        # positives may appear without the explicit plus
+        if v.startswith("-"):
+            variants = [v, v.replace("-", "\u2212"), v.replace("-", "$-$")]
+        else:
+            variants = [v, v.replace("+", "")]
         if not any(x in text for x in variants):
             print(f"MISSING in {surface}: {k} = {v}")
             fail += 1
 if fail:
-    print(f"\n{fail} frozen value(s) missing -- surfaces out of sync.")
+    print(f"\n{fail} check(s) failed -- surfaces out of sync.")
     sys.exit(1)
-print("All frozen values present in README.md and paper/main.tex.")
+print("All frozen values (sign-strict) and context anchors present.")

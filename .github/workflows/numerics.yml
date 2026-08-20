@@ -13,52 +13,31 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install -r requirements.txt
-      - name: Fetch release files
+      - name: Fetch release files (with hash verification)
         run: cd data && ./fetch.sh && ./fetch_systematics.sh
-      - name: Sign check (step zero)
+      - name: Sign-convention behavior check (qualitative)
         run: |
           cd src && python sign_check.py | tee /tmp/sign.log
-          grep -q "MU + biasCor         alpha=+0.155 beta=+3.116" /tmp/sign.log
-      - name: Bracket headline
-        run: |
-          cd src && python bracket.py | tee /tmp/bracket.log
-          grep -q "L_BBC = released - preBBC = -11.7" /tmp/bracket.log
-          grep -q "Delta chi2 (B - A) = +1.1" /tmp/bracket.log
-          grep -q "Delta chi2 (B - A) = +12.8" /tmp/bracket.log
-      - name: All-1829 official-sample variant
-        run: |
-          cd src && BRACKET_ALL_1829=1 python bracket.py | tee /tmp/b1829.log
-          grep -q "L_BBC = released - preBBC = -11.7" /tmp/b1829.log
-          grep -q "Delta chi2 (B - A) = +1.1" /tmp/b1829.log
-      - name: Robustness variants
-        run: |
-          cd src && python robustness.py | tee /tmp/rob.log
-          grep -q "stat-only" /tmp/rob.log
-          grep -Eq "stat-only.+released: D=\+0\.4.+uncorrected: D=\+30\.0" /tmp/rob.log
-          grep -Eq "DES-only.+released: D=\+6\.5.+uncorrected: D=\+9\.9" /tmp/rob.log
-      - name: Projection identity
-        run: |
-          cd src && python projection.py | tee /tmp/proj.log
-          grep -q "rho_C = -0.068" /tmp/proj.log
-          grep -q "L_fixed = -10.14" /tmp/proj.log
-          grep -q "L_adapt = -1.56" /tmp/proj.log
-      - name: Probes
-        run: |
-          cd src && python probes.py | tee /tmp/probes.log
-          grep -q "beta = 3.11588" /tmp/probes.log
-          grep -q "EdS (Om=1, no free shape) | L_BBC = +365.3" /tmp/probes.log
-          grep -q "wCDM (w=-0.5, Om fitted) | L_BBC = -5.7" /tmp/probes.log
-          grep -qE "rho_C \[pre-BBC fits.+: -0.077" /tmp/probes.log
-      - name: Cross-surface sync gate
+          # the MU+biasCor row must be the best reconstruction (smallest rms)
+          python - <<'PY'
+          import re
+          rows = {}
+          for line in open('/tmp/sign.log'):
+              m = re.match(r'(MU.*?)\s+alpha=', line)
+              if m:
+                  rms = float(re.search(r'rms=([\d.]+)', line).group(1))
+                  rows[m.group(1).strip()] = rms
+          assert min(rows, key=rows.get).startswith('MU + biasCor'), rows
+          print('convention check OK:', rows)
+          PY
+      - name: Verify computations against frozen manifest
+        run: cd src && python verify_frozen.py
+      - name: Cross-surface sync gate (manifest -> README, main.tex)
         run: python src/check_sync.py
-      - name: Amplitude comparison
+      - name: Smoke-run remaining scripts (no assertions here; truth lives in the manifest)
         run: |
-          cd src && python envelope.py | tee /tmp/env.log
-          grep -q "max|dmu| = 0.055 mag" /tmp/env.log
-          grep -q "max|dmu| = 0.276 mag" /tmp/env.log
-          grep -q "BELOW tested amplitude" /tmp/env.log
-          grep -q "ABOVE tested amplitude" /tmp/env.log
-      - name: Systematic modes
-        run: |
-          cd src && python bbc_systematic_modes.py | tee /tmp/modes.log
-          grep -q "quadrature of max shifts: 0.71" /tmp/modes.log
+          cd src
+          python bracket.py > /dev/null
+          python robustness.py > /dev/null
+          python projection.py > /dev/null
+          python envelope.py > /dev/null
