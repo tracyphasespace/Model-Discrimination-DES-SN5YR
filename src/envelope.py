@@ -19,7 +19,7 @@ consistent with its far larger leverage.
 import numpy as np
 from bracket import load, make_chi2, mu_modelB, mu_lcdm
 
-CAMILLERI_ENVELOPE_MAG = 0.15
+CAMILLERI_TESTED_AMPLITUDE_MAG = 0.15
 
 
 def main():
@@ -42,13 +42,13 @@ def main():
         ("Einstein-de Sitter (Om=1) vs LCDM Om=0.352",
          mu_lcdm(zhd, zhel, 1.0) - mu_lcdm(zhd, zhel, 0.352)),
     ]
-    print(f"Camilleri et al. validated reference-cosmology envelope: "
-          f"~{CAMILLERI_ENVELOPE_MAG} mag\n")
+    print(f"Camilleri et al. tested reference-cosmology amplitude scale: "
+          f"~{CAMILLERI_TESTED_AMPLITUDE_MAG} mag\n")
     for name, d in cases:
         dt = proj(d)
         mx = np.abs(dt).max()
-        rel = mx / CAMILLERI_ENVELOPE_MAG
-        pos = ("BELOW tested amplitude" if mx < CAMILLERI_ENVELOPE_MAG
+        rel = mx / CAMILLERI_TESTED_AMPLITUDE_MAG
+        pos = ("BELOW tested amplitude" if mx < CAMILLERI_TESTED_AMPLITUDE_MAG
                else "ABOVE tested amplitude")
         print(f"{name}:\n  offset-removed max|dmu| = {mx:.3f} mag "
               f"({rel:.2f}x the tested ~0.15 mag scale) -> {pos}\n")

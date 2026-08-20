@@ -2,7 +2,9 @@ name: numerics
 on:
   workflow_dispatch:
   push:
-    paths: ['src/**', 'data/fetch*.sh', 'requirements.txt', '.github/workflows/numerics.yml']
+    paths: ['src/**', 'data/fetch*.sh', 'requirements.txt', 'README.md',
+            'paper/main.tex', 'frozen_results.json',
+            '.github/workflows/numerics.yml']
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -47,6 +49,8 @@ jobs:
           grep -q "EdS (Om=1, no free shape) | L_BBC = +365.3" /tmp/probes.log
           grep -q "wCDM (w=-0.5, Om fitted) | L_BBC = -5.7" /tmp/probes.log
           grep -qE "rho_C \[pre-BBC fits.+: -0.077" /tmp/probes.log
+      - name: Cross-surface sync gate
+        run: python src/check_sync.py
       - name: Amplitude comparison
         run: |
           cd src && python envelope.py | tee /tmp/env.log
