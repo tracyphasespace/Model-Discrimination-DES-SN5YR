@@ -61,6 +61,12 @@ def main():
     check("Delta released", d_rel, "delta_chi2_released", 0.05)
     check("Delta preBBC", d_pre, "delta_chi2_prebbc", 0.05)
     check("L_BBC", d_rel - d_pre, "L_BBC", 0.05)
+    check("N default", float(len(hd)), "N_default", 0)
+    dof = len(hd) - 2  # one shape parameter + marginalized offset
+    check("chi2/dof released", min(r_rel["chi2_A"], r_rel["chi2_B"]) / dof,
+          "chi2dof_released", 0.005)
+    check("chi2/dof preBBC", min(r_pre["chi2_A"], r_pre["chi2_B"]) / dof,
+          "chi2dof_prebbc", 0.005)
     check("Om released", r_rel["om"], "om_released", 0.002)
     check("eta released", r_rel["eta"], "eta_released", 0.002)
     check("Om preBBC", r_pre["om"], "om_prebbc", 0.002)
@@ -74,6 +80,7 @@ def main():
     ra = fit(chi2_2, z2, zh2, hd2.MU.to_numpy())
     rb = fit(chi2_2, z2, zh2, hd2.MU.to_numpy() + b2)
     L1829 = (ra["chi2_B"] - ra["chi2_A"]) - (rb["chi2_B"] - rb["chi2_A"])
+    check("N official", float(len(hd2)), "N_official", 0)
     check("L_BBC (all-1829)", L1829, "L_BBC", 0.1)
 
     # --- biasCor characterization ---
@@ -81,8 +88,9 @@ def main():
     check("biasCor slope", float(np.polyfit(zhd, b, 1)[0]), "biascor_slope", 0.005)
 
     # --- projection & decomposition ---
-    # d is defined at the PUBLISHED (rounded) released-vector fits, per the
-    # manuscript's Section 5.8; the manifest is the single source of those.
+    # d is defined at the TABULATED THREE-DECIMAL released-vector best-fit
+    # values, per the manuscript's Section 5.8; the manifest is the single
+    # source of those tabulated values.
     om0, eta0 = num("om_released"), num("eta_released")
     mA, mB = mu_lcdm(zhd, zhel, om0), mu_modelB(zhd, zhel, eta0)
     bt, dt = proj(b), proj(mB - mA)

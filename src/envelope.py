@@ -16,10 +16,21 @@ Expected: released-best-fit Model B departs by at most ~0.055 mag (well
 below the tested amplitude); Einstein-de Sitter by ~0.276 mag (well above),
 consistent with its far larger leverage.
 """
+import json
+import os
+
 import numpy as np
 from bracket import load, make_chi2, mu_modelB, mu_lcdm
 
+# External literature constant (Camilleri et al. 2024): tested amplitude scale
 CAMILLERI_TESTED_AMPLITUDE_MAG = 0.15
+# Fitted coordinates from the frozen-results manifest (tabulated values)
+_F = json.load(open(os.path.join(os.path.dirname(__file__), "..",
+                                 "frozen_results.json")))
+ETA_REL = float(_F["eta_released"])
+OM_REL = float(_F["om_released"])
+ETA_PRE = float(_F["eta_prebbc"])
+OM_PRE = float(_F["om_prebbc"])
 
 
 def main():
@@ -33,14 +44,14 @@ def main():
         return x - (u @ Ci @ x) / uCu * u
 
     cases = [
-        ("Model B, released fit (eta=0.297) vs LCDM Om=0.352",
-         mu_modelB(zhd, zhel, 0.297) - mu_lcdm(zhd, zhel, 0.352)),
-        ("Model B, released fit (eta=0.297) vs Planck Om=0.315",
-         mu_modelB(zhd, zhel, 0.297) - mu_lcdm(zhd, zhel, 0.315)),
-        ("Model B, pre-BBC fit (eta=0.049) vs LCDM Om=0.499",
-         mu_modelB(zhd, zhel, 0.049) - mu_lcdm(zhd, zhel, 0.499)),
-        ("Einstein-de Sitter (Om=1) vs LCDM Om=0.352",
-         mu_lcdm(zhd, zhel, 1.0) - mu_lcdm(zhd, zhel, 0.352)),
+        (f"Model B, released fit (eta={ETA_REL}) vs LCDM Om={OM_REL}",
+         mu_modelB(zhd, zhel, ETA_REL) - mu_lcdm(zhd, zhel, OM_REL)),
+        (f"Model B, released fit (eta={ETA_REL}) vs Planck Om=0.315",
+         mu_modelB(zhd, zhel, ETA_REL) - mu_lcdm(zhd, zhel, 0.315)),
+        (f"Model B, pre-BBC fit (eta={ETA_PRE}) vs LCDM Om={OM_PRE}",
+         mu_modelB(zhd, zhel, ETA_PRE) - mu_lcdm(zhd, zhel, OM_PRE)),
+        (f"Einstein-de Sitter (Om=1) vs LCDM Om={OM_REL}",
+         mu_lcdm(zhd, zhel, 1.0) - mu_lcdm(zhd, zhel, OM_REL)),
     ]
     print(f"Camilleri et al. tested reference-cosmology amplitude scale: "
           f"~{CAMILLERI_TESTED_AMPLITUDE_MAG} mag\n")
