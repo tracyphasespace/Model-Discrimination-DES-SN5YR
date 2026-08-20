@@ -17,7 +17,7 @@ Raw base: https://raw.githubusercontent.com/tracyphasespace/Model-Discrimination
 - Key scripts (raw): src/sign_check.py, src/bracket.py, src/projection.py, src/robustness.py, src/probes.py, src/envelope.py, src/verify_frozen.py, src/check_sync.py under the raw base above
 - Raw DES griz light curves (8,293 candidates, gzipped, sha256): data/des_sn5yr_raw_photometry.csv.gz under the raw base
 - Scope note: all numbers are pinned to DES-SN5YR tag v1.2; DES-Dovekie
-  (Popovic et al. 2026) supersedes upstream; preregistered rerun:
+  (Popovic et al. 2026) supersedes upstream; preregistered rerun EXECUTED (Delta chi2 = +1.8 robust, L_BBC -2.4):
   https://raw.githubusercontent.com/tracyphasespace/Static-Universe-DES-SN5YR/master/v8/DOVEKIE_RERUN_PREREG.md
 
 Companion physics paper (static-universe interpretation, V8):
