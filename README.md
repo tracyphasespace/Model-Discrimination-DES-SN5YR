@@ -99,9 +99,10 @@ independent tests like this one possible. Code: MIT.
 
 ## Companion paper
 
-*A Static-Universe Two-Component Scattering Interpretation of DES-SN5YR
-Supernovae* (McSheery 2026, DOI
-[10.5281/zenodo.22025329](https://doi.org/10.5281/zenodo.22025329)) presents
+*A Static-Universe Two-Channel Photon Propagation Model Confronted with
+DES-SN5YR* (McSheery 2026, Draft 6.0, DOI
+[10.5281/zenodo.22031121](https://doi.org/10.5281/zenodo.22031121);
+supersedes Draft 5, [10.5281/zenodo.22025329](https://doi.org/10.5281/zenodo.22025329)) presents
 the propagation physics motivating this paper's probe law; its code lives in
 [Static-Universe-DES-SN5YR](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR).
 The two works are logically independent — this repository's leverage
