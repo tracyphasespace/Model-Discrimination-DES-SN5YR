@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Discrimination in DES-SN5YR</title>
+<style>
+  :root{
+    --bg:#faf9f6; --ink:#1a1e24; --muted:#5a6472; --accent:#8a3324;
+    --card:#ffffff; --line:#e3ded4; --code:#f2efe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#14161a; --ink:#e8e6e1; --muted:#9aa3af; --accent:#e0714f;
+           --card:#1d2026; --line:#2e333b; --code:#22262d; }
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{background:var(--bg); color:var(--ink);
+       font:17px/1.65 Georgia,'Times New Roman',serif;
+       max-width:46rem; margin:0 auto; padding:3rem 1.25rem 4rem}
+  h1{font-size:1.65rem; line-height:1.3; margin-bottom:.4rem}
+  .byline{color:var(--muted); font-size:.95rem; margin-bottom:1.6rem}
+  .buttons{display:flex; flex-wrap:wrap; gap:.6rem; margin:1.4rem 0 2rem}
+  .btn{display:inline-block; padding:.55rem 1.05rem; border-radius:6px;
+       text-decoration:none; font-family:system-ui,sans-serif;
+       font-size:.92rem; font-weight:600; border:1.5px solid var(--accent);
+       color:var(--accent); background:transparent}
+  .btn.primary{background:var(--accent); color:#fff}
+  .btn:hover{filter:brightness(1.1)}
+  p{margin-bottom:1rem}
+  .finding{background:var(--card); border:1px solid var(--line);
+           border-left:4px solid var(--accent); border-radius:6px;
+           padding:1.1rem 1.3rem; margin:1.6rem 0}
+  .finding table{width:100%; border-collapse:collapse;
+                 font-family:system-ui,sans-serif; font-size:.92rem}
+  .finding th,.finding td{padding:.45rem .6rem; text-align:left;
+                          border-bottom:1px solid var(--line)}
+  .finding tr:last-child td{border-bottom:none}
+  .finding td:last-child,.finding th:last-child{text-align:right;
+    font-variant-numeric:tabular-nums}
+  h2{font-size:1.15rem; margin:2rem 0 .7rem;
+     font-family:system-ui,sans-serif}
+  code,pre{font-family:ui-monospace,'Cascadia Code',Consolas,monospace;
+           font-size:.86em; background:var(--code); border-radius:4px}
+  code{padding:.1em .35em}
+  pre{padding:.9rem 1.1rem; overflow-x:auto; margin-bottom:1rem;
+      line-height:1.5}
+  pre code{background:none; padding:0}
+  .note{color:var(--muted); font-size:.92rem}
+  a{color:var(--accent)}
+  footer{margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
+         color:var(--muted); font-size:.88rem;
+         font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+
+<h1>Model Discrimination in the DES-SN5YR Hubble Diagram Is Highly
+Sensitive to the Simulation-Derived Bias-Correction Layer</h1>
+<p class="byline">T.&thinsp;McSheery &middot; PhaseSpace Inc. &middot;
+Draft 4.1, 20 August 2026 &middot;
+DOI <a href="https://doi.org/10.5281/zenodo.22022089">10.5281/zenodo.22022089</a></p>
+
+<div class="buttons">
+  <a class="btn primary" href="paper/Model-Discrimination-DES-SN5YR_Draft4.1.pdf">Read the paper (PDF)</a>
+  <a class="btn" href="https://doi.org/10.5281/zenodo.22022089">Zenodo archive</a>
+  <a class="btn" href="https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR">Code &amp; data</a>
+</div>
+
+<p>Published Type Ia supernova distance moduli are not raw measurements —
+they carry a bias-correction layer computed from survey simulations
+generated under a <em>reference</em> cosmology. This paper measures how
+much leverage that layer has on model comparison in the public DES-SN5YR
+release, using two one-parameter distance laws and the full released
+covariance.</p>
+
+<div class="finding">
+<table>
+  <tr><th>distance-modulus vector</th><th>&Delta;&chi;&sup2; (probe &minus; &Lambda;CDM)</th></tr>
+  <tr><td>released <code>MU</code> (BBC-corrected)</td><td><strong>+1.1</strong></td></tr>
+  <tr><td>reconstructed pre-BBC (<code>MU + biasCor_mu</code>)</td><td><strong>+12.8</strong></td></tr>
+  <tr><td>pairwise discrimination leverage <em>L</em><sub>BBC</sub></td><td><strong>&minus;11.7</strong></td></tr>
+</table>
+</div>
+
+<p>The correction step moves the verdict by roughly <strong>eleven times
+the verdict's own magnitude</strong> — and moves it <em>toward</em> the
+alternative, so the concern is structural, not partisan. The sensitivity
+is not unique to the probe (flat <em>w</em>CDM: <em>L</em> = &minus;5.7;
+Einstein&ndash;de Sitter control: <em>L</em> = +365, opposite sign). DES's
+own simulation reruns (Camilleri et&nbsp;al. 2024) indicate the
+reference-cosmology part of that leverage is small at this comparison's
+amplitude scale — the open question is precisely quantified for laws
+beyond it.</p>
+
+<p>The paper makes <strong>no cosmological claim</strong>. It measures the
+size of the container, states what would settle the remainder, and invites
+falsification.</p>
+
+<h2>Reproduce it — under an hour, public data only</h2>
+<pre><code>git clone https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR
+cd Model-Discrimination-DES-SN5YR
+pip install -r requirements.txt
+cd data &amp;&amp; ./fetch.sh &amp;&amp; ./fetch_systematics.sh &amp;&amp; cd ..
+python src/sign_check.py      # step zero — establishes the sign convention
+python src/verify_frozen.py   # recomputes 27 results vs the frozen manifest</code></pre>
+
+<p class="note">The raw griz light curves for all 8,293 DES transient
+candidates ship in the repository. Every number in the paper regenerates
+from seven scripts; CI re-verifies the full chain — computation &rarr;
+manifest &rarr; manuscript — on every commit. The falsification recipe is
+in the README, including the two implementation errors the protocol caught
+in its own authors before circulation.</p>
+
+<footer>
+DES-SN5YR data &copy; the Dark Energy Survey Collaboration (public release,
+tag v1.2). Code MIT. Paper archived at
+<a href="https://doi.org/10.5281/zenodo.22022089">doi:10.5281/zenodo.22022089</a>.
+</footer>
+
+</body>
+</html>
