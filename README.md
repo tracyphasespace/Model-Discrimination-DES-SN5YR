@@ -102,9 +102,11 @@ independent tests like this one possible. Code: MIT.
 *A Static-Universe Two-Component Scattering Interpretation of DES-SN5YR
 Supernovae* (McSheery 2026, DOI
 [10.5281/zenodo.22025329](https://doi.org/10.5281/zenodo.22025329)) presents
-the propagation physics motivating this paper's probe law. The two works are
-logically independent — this repository's leverage measurement makes no
-cosmological claim and stands regardless of that interpretation.
+the propagation physics motivating this paper's probe law; its code lives in
+[Static-Universe-DES-SN5YR](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR).
+The two works are logically independent — this repository's leverage
+measurement makes no cosmological claim and stands regardless of that
+interpretation.
 
 ## Paper
 
