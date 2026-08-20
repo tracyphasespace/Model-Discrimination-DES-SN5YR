@@ -4,7 +4,7 @@
 PhaseSpace Inc., San Leandro, CA, USA
 Correspondence: *[email]*
 
-**Version:** draft 2 — 2026-08-19 (draft 1's §5 table retracted and rebuilt; see §5.2 note)
+**Version:** draft 2.1 — 2026-08-19 (draft 1's §5 table retracted and rebuilt; see §5.2 note)
 **Preprint DOI:** *[Zenodo DOI]* · **Code:** *[repository URL]*
 
 ---
@@ -15,7 +15,7 @@ Published Type Ia supernova distance moduli are not raw measurements. They are t
 
 In the released moduli the bias correction has a median of −0.05 mag, per-object values spanning −0.89 to +0.65 mag, and a systematic redshift dependence (straight-line slope −0.125 mag per unit redshift; binned-median difference 0.086 mag across the sample). Typical model-comparison margins in this dataset are Δχ² of order unity. To measure the layer's leverage rather than argue from scale, we perform a sensitivity bracket: two one-parameter distance laws — flat ΛCDM and a non-expanding phenomenological probe — are fitted to the released moduli and to the same moduli with the bias correction removed (the uncorrected vector MU + biasCor_mu; the sign convention is established empirically in §5.1, and getting it backwards inverts the arithmetic — as it did in this paper's own first draft, caught by the §7 protocol).
 
-The result: against the released vector the models are statistically indistinguishable, Δχ² = +1.6 in favour of ΛCDM; against the uncorrected vector, ΛCDM's margin widens to Δχ² = +13.3. **The correction layer therefore moves the verdict by ≈ 12 χ² units — seven times the verdict's own magnitude — and moves it *toward* the alternative model.** Robustness variants (statistical-only covariance; external anchors excluded) give leverage factors between 2 and 20. Neither endpoint of the bracket is a statement about the universe: the corrected endpoint inherits the simulation's cosmology, and the uncorrected endpoint discards real selection effects while retaining a covariance built for the corrected vector. The conclusion the bracket does support is symmetric and, we argue, sufficient: model discrimination at the current precision is correction-dominated, and the released Hubble diagram cannot by itself adjudicate between distance laws that differ at the few-Δχ² level. Notably, the conditioning cuts *against* the incumbent here — the ΛCDM-derived layer is what compresses ΛCDM's raw-vector advantage into near-degeneracy — so the concern raised is structural, not partisan. We propose a paired bias-correction instrument — both models' corrections computed against one empirically anchored survey-selection model, with the reported quantity being the verdict *and its spread across correction schemes* — as the minimum requirement for a cosmology-independent adjudication. All inputs are public; a complete reproduction recipe is given in §7.
+The result: against the released vector the models are statistically indistinguishable, Δχ² = +1.6 in favour of ΛCDM; against the uncorrected vector, ΛCDM's margin widens to Δχ² = +13.3. Stripping the layer does two things at once — it removes the cosmology conditioning *and* reintroduces the real Malmquist selection the layer exists to fix (the χ²/dof degradation from 0.93 to 1.34 is the tell) — so the ≈ 12 χ² units of movement bound the correction step's **total** leverage, of which the cosmology-conditioned component is a fraction. We then isolate that component as far as the released products allow: perturbing the moduli by each of the twelve single-systematic modes DES publishes for the layer's simulation inputs (scatter model, dust and population realizations, host library, selection efficiency, classifier swaps) moves the verdict by at most ±0.40 χ² units per input and 0.71 in quadrature — below the margin. **The three-tier finding: the verdict of 1.6 is decided inside a step of ~12-unit total leverage; DES's own budget certifies the conditioned component at ≤ 0.7 units *within the ΛCDM neighbourhood*; and the conditioning against distance laws far from that neighbourhood — bounded between 0.7 and 12 — has been measured by no one.** Kessler & Scolnic's validation establishes neighbourhood safety; the burden for distant laws has not been discharged. Note the direction: the layer compresses a large raw ΛCDM advantage into the published near-degeneracy, so the conditioning cannot be characterized as favouring the model that supplied it — the concern raised is structural, not partisan. We propose a paired bias-correction instrument — both models' corrections computed against one empirically anchored survey-selection model, with the reported quantity being the verdict *and its spread across correction schemes* — as the minimum requirement for a cosmology-independent adjudication. All inputs are public; a complete reproduction recipe is given in §7.
 
 ---
 
@@ -80,7 +80,7 @@ The bracket requires the *uncorrected* modulus vector, and constructing it requi
 | MU − biasCor | 0.058 | 1.11 | 0.232 mag |
 | **MU + biasCor** | **0.155** | **3.12** | **0.017 mag** |
 
-Only MU + biasCor reconstructs the Tripp estimator, and it does so with textbook SALT coefficients at millimagnitude residuals. **The release subtracts the correction; the uncorrected vector is MU + biasCor_mu.** (Draft 1 of this paper used the opposite sign, thereby applying the correction twice, and reported a spurious verdict reversal. The error was caught by the §7 reproduction protocol — specifically the step demanding this check — before circulation. We report this because it is the strongest available demonstration that the recipe's checks are load-bearing.)
+Only MU + biasCor reconstructs the Tripp estimator, and it does so with textbook SALT coefficients at millimagnitude residuals. **The release subtracts the correction; the uncorrected vector is MU + biasCor_mu.** An earlier draft of this paper used the opposite sign and reported a spurious verdict reversal; the error was caught by this check before circulation.
 
 ### 5.2 The two distance laws and the result
 
@@ -95,7 +95,7 @@ Both models are fitted by minimizing χ² = **r**ᵀC⁻¹**r** with the full re
 | released (bias-corrected) | Ω_m = 0.35, χ² = 1640.3 | η = 0.30, χ² = 1641.9 | **+1.6** |
 | uncorrected (MU + biasCor) | Ω_m = 0.50, χ² = 2362.6 | η = 0.05, χ² = 2375.9 | **+13.3** |
 
-The first row reproduces the published-style verdict: statistically indistinguishable models, a sliver favouring ΛCDM. The second row, computed on the same objects with the same covariance and models, gives ΛCDM a sevenfold larger margin. **The correction layer moves the verdict by 11.7 χ² units — seven times the verdict's own magnitude — and moves it toward the alternative:** the ΛCDM-conditioned layer is what compresses ΛCDM's raw-vector advantage into near-degeneracy. The probe's shape parameter collapses from 0.30 to 0.05 and the fitted Ω_m rises to 0.50, quantifying how much of *both* models' fitted structure is supplied by the layer.
+The first row reproduces the published-style verdict: statistically indistinguishable models, a sliver favouring ΛCDM. The second row, computed on the same objects with the same covariance and models, gives ΛCDM a sevenfold larger margin. Stripping the layer does two things at once — removes the conditioning *and* reintroduces real Malmquist selection (χ²/dof 0.93 → 1.34; both models are then fitting a z-dependent selection ramp neither describes, and the stripped-vector preference largely measures which model better mimics an uncorrected selection trend). **The bracket therefore bounds the correction step's total leverage — 11.7 χ² units, seven times the verdict — of which the cosmology-conditioned component is a fraction isolated in §5.5.** The direction is itself informative: the layer compresses a large raw ΛCDM advantage into the published near-degeneracy, so the conditioning cannot be characterized as favouring the model that supplied it. The probe's shape parameter collapses from 0.30 to 0.05 and the fitted Ω_m rises to 0.50, quantifying how much of *both* models' fitted structure the step supplies.
 
 ### 5.3 Robustness
 
@@ -105,9 +105,24 @@ The first row reproduces the published-style verdict: statistically indistinguis
 | statistical-only (diagonal) | +1.3 | +30.7 | 23× |
 | DES-only (194 anchors excluded) | +6.5 | +9.9 | 2× (but see below) |
 
-Two features deserve note. First, the leverage exceeds the verdict in every variant. Second, the DES-only row shows that on the *released* vector the "indistinguishable" verdict itself depends on the external anchors: excluding them gives ΛCDM a margin of +6.5 even before the bracket is applied. The anchors are precisely the objects carrying the ΛCDM-flow peculiar-velocity layer (§3), so the two cosmology-conditioned layers act jointly on the headline verdict.
+Two features deserve note. First, the leverage exceeds the verdict in every variant. Second, the DES-only row is flagged rather than headlined: excluding the anchors both removes the objects carrying the ΛCDM-flow peculiar-velocity layer (§3) *and* removes the low-redshift lever arm that breaks the offset/shape degeneracy — the +6.5 released-vector margin admits both readings (reduced conditioning exposure; reduced constraint), and we do not adjudicate between them here.
 
-### 5.4 What this does and does not show
+### 5.4 Isolating the conditioned component within DES's own budget
+
+The release ships single-systematic covariance blocks for the correction layer's simulation inputs — the intrinsic-scatter model (BS20), dust/population realizations (P21SYS1–3, P21_HOSTCOLOR, W22_AGE), host library (SVAHOSTLIB), selection efficiency (HOSTEFFshift), core-collapse likelihood (CClikelihood), and classifier swaps (SNNtraining, SNIRF, SCONE). Each block is (near) rank-1: the covariance of a single input swap, C_k ≈ d_k d_kᵀ. Perturbing the released moduli by ±d_k and refitting both models measures each input's leverage on the verdict directly:
+
+| input mode | verdict shift (±) | | input mode | verdict shift (±) |
+|---|---|---|---|---|
+| BS20 (scatter model) | 0.31 | | HOSTEFFshift | 0.17 |
+| P21SYS1 | 0.22 | | SVAHOSTLIB | 0.06 |
+| P21SYS2 | 0.40 | | CClikelihood | 0.05 |
+| P21SYS3 | 0.14 | | SNNtraining | 0.08 |
+| P21_HOSTCOLOR | 0.01 | | SNIRF | 0.14 |
+| W22_AGE | 0.22 | | SCONE | 0.25 |
+
+Quadrature over all twelve: **0.71 χ² units**, against the 1.6 margin. Within DES's own error budget, then, the conditioned component does *not* overturn the verdict — the neighbourhood validation of Kessler & Scolnic is confirmed on this dataset by an independent route. The caveat is the same one that motivates this paper: every one of these variations is computed inside ΛCDM simulations. They measure sensitivity to inputs *within the neighbourhood*, not the conditioning against a distant distance law. The three-tier structure is therefore: total step leverage ≈ 12 (bracket, §5.2); within-neighbourhood conditioned component ≤ 0.7 (this section); conditioning against distant laws — somewhere between, measured by no one. Closing that interval is exactly the paired instrument of §6; the definitive version (rerunning the survey simulation under a non-ΛCDM input geometry) is the follow-up to this paper.
+
+### 5.5 What this does and does not show
 
 - **Neither endpoint is a result about the universe.** The corrected endpoint inherits the simulation's cosmology. The uncorrected endpoint discards real selection effects — Malmquist-type selection in a flux-limited survey is a physical fact — and retains a covariance built for the corrected vector (its absolute χ²/dof degrades to ≈ 1.34, which is why only differences within a row, not across rows, are quoted).
 - **The +13.3 endpoint must not be read as the "true" ΛCDM margin,** for the same reasons in mirror image.
@@ -157,7 +172,7 @@ The analysis requires the public data release and a scientific Python environmen
 
 The bias-correction layer in the DES-SN5YR distance-modulus release carries a systematic redshift dependence of −0.125 mag per unit redshift and is computed from simulations conditioned on one of the models it is subsequently used to test. A direct sensitivity bracket shows the layer moves the model-comparison verdict by seven times the verdict's own magnitude — and moves it toward the alternative model, compressing the incumbent's raw-vector margin into the near-degeneracy that is published. Model discrimination on the released vector is correction-dominated at current precision, in every robustness variant examined.
 
-We draw no cosmological conclusion. A dataset processed through a cosmology-conditioned correction cannot, without further work, discriminate against distance laws far from that cosmology — in either direction. The required further work, a paired correction computed against an empirically anchored selection model, is achievable with existing public data.
+We draw no cosmological conclusion. The finding is three-tiered: the verdict (1.6) is decided inside a step of ~12-unit total leverage; DES's own single-systematic budget certifies the cosmology-conditioned component at ≤ 0.7 units within the ΛCDM neighbourhood; and the conditioning against distance laws far from that neighbourhood — bounded between those figures — has not been measured by anyone. A dataset processed through a cosmology-conditioned correction cannot, without that measurement, discriminate against distant distance laws in either direction. The required further work — a paired correction computed against an empirically anchored selection model — is achievable with existing public data.
 
 ---
 
