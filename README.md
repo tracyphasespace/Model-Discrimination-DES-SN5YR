@@ -3,8 +3,8 @@
 **How sensitive is supernova-cosmology model discrimination to the
 simulation-derived bias-correction layer?** Companion repository for
 *"Model Discrimination in the DES-SN5YR Hubble Diagram Is Highly Sensitive
-to the Simulation-Derived Bias-Correction Layer"* (T. McSheery; PDF will be
-added to `paper/` on release; reserved archive DOI 10.5281/zenodo.22022089).
+to the Simulation-Derived Bias-Correction Layer"* (T. McSheery; PDF
+in `paper/`; published at DOI [10.5281/zenodo.22022089](https://doi.org/10.5281/zenodo.22022089)).
 
 Everything here runs from **public DES data** on a laptop. The two release
 files the headline needs total ~17 MB; the full raw light curves for all
