@@ -1,0 +1,4 @@
+data/*.csv
+data/*.gz
+data/README.md
+__pycache__/
