@@ -33,7 +33,8 @@ for name, target in [
     y = (target - d.mB).to_numpy()
     coef, *_ = np.linalg.lstsq(X, y, rcond=None)
     rms = (y - X @ coef).std()
-    print(f"{name} alpha={coef[0]:+.3f} beta={-coef[1]:+.3f} rms={rms:.4f} mag")
+    print(f"{name} alpha={coef[0]:+.3f} beta={coef[1]:+.3f} rms={rms:.4f} mag")
 
-print("\nSmallest rms with textbook (alpha~0.15, beta~3.1) identifies the")
+print("\n(The design matrix column is -c, so the printed beta is +beta.)")
+print("Smallest rms with textbook (alpha~0.15, beta~3.1) identifies the")
 print("Tripp-side vector; that vector is the UNCORRECTED one.")

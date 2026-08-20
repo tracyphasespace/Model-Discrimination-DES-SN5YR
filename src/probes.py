@@ -17,12 +17,12 @@ import numpy as np
 from bracket import load, make_chi2, mu_modelB, mu_lcdm
 
 
-def mu_wcdm(z, om, w=-0.5, n_grid=400):
-    zs = np.linspace(0, z.max(), n_grid)
+def mu_wcdm(zhd, zhel, om, w=-0.5, n_grid=4000):
+    zs = np.linspace(0, zhd.max(), n_grid)
     zm = 0.5 * (zs[1:] + zs[:-1])
     E = np.sqrt(om * (1 + zm) ** 3 + (1 - om) * (1 + zm) ** (3 * (1 + w)))
     integ = np.concatenate([[0], np.cumsum(np.diff(zs) / E)])
-    return 5 * np.log10((1 + z) * np.interp(z, zs, integ))
+    return 5 * np.log10((1 + zhel) * np.interp(zhd, zs, integ))
 
 
 def main():
@@ -32,6 +32,7 @@ def main():
     u = np.ones(len(hd))
     uCu = u @ Ci @ u
     z = hd.zHD.to_numpy()
+    zhel = hd.zHEL.to_numpy()
     MU = hd.MU.to_numpy()
     b = hd.biasCor_mu.to_numpy()
     pre = MU + b
@@ -40,27 +41,32 @@ def main():
         return x - (u @ Ci @ x) / uCu * u
 
     def fitA(mu_obs):
-        oms = np.arange(0.02, 1.2001, 0.01)
-        cl = [chi2(mu_obs - mu_lcdm(z, o)) for o in oms]
-        i = int(np.argmin(cl))
-        return oms[i], cl[i]
+        from scipy.optimize import minimize_scalar
+        r = minimize_scalar(lambda o: chi2(mu_obs - mu_lcdm(z, zhel, o)),
+                            bounds=(0.01, 1.2), method="bounded",
+                            options={"xatol": 1e-4})
+        return r.x, r.fun
 
     # --- 1. rho_C at both d definitions ---
     bt = proj(b)
     nb = np.sqrt(bt @ Ci @ bt)
-    for tag, (om, eta) in [("released fits (0.35, 0.30)", (0.35, 0.30)),
-                           ("pre-BBC fits  (0.50, 0.05)", (0.50, 0.05))]:
-        d = proj(mu_modelB(z, eta) - mu_lcdm(z, om))
+    for tag, (om, eta) in [("released fits (0.352, 0.297)", (0.352, 0.297)),
+                           ("pre-BBC fits  (0.499, 0.049)", (0.499, 0.049))]:
+        d = proj(mu_modelB(z, zhel, eta) - mu_lcdm(z, zhel, om))
         nd = np.sqrt(d @ Ci @ d)
         rho = (bt @ Ci @ d) / (nb * nd)
         print(f"rho_C [{tag}]: {rho:+.3f}  (|b|={nb:.2f}, |d|={nd:.2f})")
 
     # --- 2 & 3. second probes vs free-Om LCDM ---
+    from scipy.optimize import minimize_scalar
+    def fit_wcdm(mo):
+        r = minimize_scalar(lambda o: chi2(mo - mu_wcdm(z, zhel, o)),
+                            bounds=(0.01, 1.0), method="bounded",
+                            options={"xatol": 1e-4})
+        return r.fun
     for name, mu_probe_fn, has_param in [
-            ("EdS (Om=1, no free shape)", lambda mo: chi2(mo - mu_lcdm(z, 1.0)), False),
-            ("wCDM (w=-0.5, Om fitted)",
-             lambda mo: min(chi2(mo - mu_wcdm(z, o)) for o in np.arange(0.02, 1.0001, 0.01)),
-             True)]:
+            ("EdS (Om=1, no free shape)", lambda mo: chi2(mo - mu_lcdm(z, zhel, 1.0)), False),
+            ("wCDM (w=-0.5, Om fitted)", fit_wcdm, True)]:
         ds = {}
         for vec_tag, mo in [("released", MU), ("preBBC", pre)]:
             omA, c2A = fitA(mo)
@@ -81,7 +87,7 @@ def main():
     cov = s2 * np.linalg.inv(X.T @ X)
     se = np.sqrt(np.diag(cov))
     print(f"Tripp regression on MU+biasCor: alpha = {coef[0]:.5f} +/- {se[0]:.5f}, "
-          f"beta = {-coef[1]:.5f} +/- {se[1]:.5f}, rms = {r.std():.4f} mag")
+          f"beta = {coef[1]:.5f} +/- {se[1]:.5f}, rms = {r.std():.4f} mag")
     print("DES-reported global values: alpha = 0.16087, beta = 3.11780 (gamma 0.03754")
     print("not modeled here; its omission is part of the residual rms).")
 

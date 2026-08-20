@@ -1,4 +1,4 @@
-# DES-SN5YR correction-bracket
+# Model Discrimination in DES-SN5YR
 
 **How sensitive is supernova-cosmology model discrimination to the
 simulation-derived bias-correction layer?** Companion repository for
@@ -29,12 +29,15 @@ wide-separation comparisons, not of this probe: Einstein–de Sitter shows
 |L| ≈ 367 (opposite sign); flat wCDM (w = −0.5) shows |L| = 5.0.
 
 **What this does NOT show:** neither endpoint measures the universe
-(stripping the correction restores real survey selection, and the released
-covariance belongs to the corrected vector); the cosmology-conditioned
-*component* of the leverage is not isolated — DES's own single-systematic
-modes bound it at ≤ 0.7 χ² units *within the ΛCDM neighbourhood*, and no
-measurement exists for distant distance laws. The paper's ask is that
-measurement, not a verdict.
+(stripping the correction restores real survey selection — χ²/dof degrades
+0.93 → 1.34 — and the released covariance belongs to the corrected vector;
+the reconstruction also retains the globally fitted α, β, γ, making it a
+hybrid diagnostic). The bracket measures the *total* step leverage; no single
+component is bounded by it. The quadrature sensitivity of the verdict to
+twelve released BBC-related systematic modes is 0.71 χ² units
+(`src/bbc_systematic_modes.py`) — below the margin — but none of those modes
+is a reference-cosmology variation; that question is addressed by the
+Camilleri simulation reruns and the envelope placement above.
 
 ## Replicate it
 
@@ -48,10 +51,11 @@ python src/sign_check.py           # STEP ZERO. Establishes the biasCor sign
                                    # draft 1 — run it before anything else.
 python src/bracket.py              # the headline table + layer characterization
 python src/robustness.py           # stat-only covariance; anchors excluded
-python src/isolate_conditioning.py # DES's 12 single-sys BBC-input modes
-                                   #   (needs SingleSYS_CovMatrix/ from release)
-python src/projection.py           # rho_C = -0.065; L_fixed/-adapt = -9.7/-2.0
+python src/projection.py           # rho_C = -0.068; L_fixed/adapt = -10.1/-1.6
 python src/probes.py               # EdS and wCDM second probes; Tripp errors
+python src/envelope.py             # Camilleri validated-envelope placement
+cd data && ./fetch_systematics.sh && cd ..   # 12 single-sys blocks, then:
+python src/bbc_systematic_modes.py # quadrature sensitivity to those modes
 ```
 
 Every number in the paper regenerates from these six scripts. Expected
@@ -84,8 +88,10 @@ independent tests like this one possible. Code: MIT.
 
 ## Paper
 
-`paper/` will carry the released PDF. Draft 2.1 (markdown) is retained for
-history; the current manuscript (draft 3+, migrating to LaTeX) supersedes it
-— in particular, an early draft's claim that removing the correction
-"reverses the verdict" was a sign-convention error, retracted and disclosed
-in §5.1 of the current text.
+`paper/main.tex` is the canonical manuscript (Draft 4.1, LaTeX end-to-end;
+PDF built by CI on every change). Draft 2.1 (markdown) is retained for
+history only. Two disclosed self-corrections: an early draft's
+"verdict reverses" claim was a sign-convention error caught by step zero;
+draft 4's numbers used a simplified redshift convention, corrected to the
+official zHD/zHEL treatment in 4.1 (headline moved +1.6 → +1.1, swing
+unchanged at 11.7).

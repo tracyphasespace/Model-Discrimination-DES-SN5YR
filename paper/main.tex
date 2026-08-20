@@ -13,7 +13,6 @@
 \usepackage[margin=1in]{geometry}
 
 \newcommand{\paperdoi}{10.5281/zenodo.22022089}
-\newcommand{\repourl}{https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}
 
 \title{Model Discrimination in the DES-SN5YR Hubble Diagram Is Highly
 Sensitive to the Simulation-Derived Bias-Correction Layer}
@@ -28,7 +27,7 @@ Sensitive to the Simulation-Derived Bias-Correction Layer}
 
 \begin{center}
 \small
-Version: Draft 4 --- 20 August 2026\\
+Version: Draft 4.1 --- 20 August 2026\\
 DOI: \href{https://doi.org/10.5281/zenodo.22022089}{\paperdoi}\\
 Code and reproduction package:
 \href{https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}{github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}
@@ -40,46 +39,54 @@ are the output of a processing chain that includes light-curve
 standardization, Galactic-extinction treatment, photometric calibration,
 redshift and peculiar-velocity corrections, and survey-bias corrections
 derived from simulations. In the DES-SN5YR release, the BEAMS with Bias
-Corrections (BBC) layer is obtained from simulations that assume a fiducial
-cosmology together with intrinsic-scatter and population models.
+Corrections (BBC) layer is obtained from simulations generated under a
+\emph{reference} cosmology together with intrinsic-scatter and population
+models.
 
 We quantify the leverage of that correction step in the public DES-SN5YR
-v1.2 Hubble-diagram release ($N = 1768$). The released BBC correction has
-median $-0.05$~mag, range $-0.89$ to $+0.65$~mag, and a redshift regression
-slope of $-0.125$~mag per unit $z$. Comparing flat $\Lambda$CDM against a
-one-parameter non-expanding probe law with the full released covariance and
-an analytically marginalized offset, the released vector gives
-$\Delta\chi^2 \equiv \chi^2_B - \chi^2_A = +1.6$, weakly favouring
-$\Lambda$CDM; the reconstructed pre-BBC vector
-(\texttt{MU}${}+{}$\texttt{biasCor\_mu}) gives $+13.3$. Applying the
+v1.2 Hubble-diagram release, using the official likelihood's redshift
+convention ($z_{\mathrm{HEL}}$ in the external luminosity-distance factor,
+$z_{\mathrm{HD}}$ in the cosmological integral). The released BBC
+correction has median $-0.05$~mag, range $-0.89$ to $+0.65$~mag, and a
+redshift regression slope of $-0.125$~mag per unit $z$. Comparing flat
+$\Lambda$CDM against a one-parameter non-expanding probe law with the full
+released covariance and an analytically marginalized offset, the released
+vector gives $\Delta\chi^2 \equiv \chi^2_B - \chi^2_A = +1.1$, weakly
+favouring $\Lambda$CDM; the reconstructed pre-BBC vector
+(\texttt{MU}${}+{}$\texttt{biasCor\_mu}) gives $+12.8$. Applying the
 released BBC step therefore \emph{changes} the pairwise statistic by
-$L_{\mathrm{BBC}} = -11.7$ $\chi^2$ units --- about seven times the final
-discrimination --- and moves this comparison toward the probe rather than
-toward the fiducial model, so the methodological concern raised here does
-not arise from a correction that disadvantages the alternative.
+$L_{\mathrm{BBC}} = -11.7$ $\chi^2$ units --- roughly eleven times the
+final discrimination --- and moves this comparison toward the probe rather
+than toward the fiducial model, so the concern raised here does not arise
+from a correction that disadvantages the alternative. The result is
+unchanged when all 1829 released entries are retained.
 
-Removing BBC simultaneously removes cosmology conditioning and restores
-real survey selection ($\chi^2/\mathrm{dof}$ degrades from 0.93 to 1.34);
-the reconstruction also retains the globally fitted standardization
-parameters, making it a hybrid diagnostic rather than a full no-BBC
-analysis. The 11.7-unit result therefore measures the \emph{total} leverage
-of the BBC step; neither the magnitude nor the sign of the specifically
-cosmology-conditioned component is isolated here. Propagating the twelve
-BBC-input systematic modes released by DES bounds that component at
-$\leq 0.7$ $\chi^2$ units in quadrature \emph{within the $\Lambda$CDM
-neighbourhood}, confirming existing near-fiducial validation; no
-corresponding bound exists for substantially different distance laws. For
-the released 1.6-unit verdict merely to exceed the unknown conditioned
-contribution, that contribution must be below $14\%$ of the measured total
-swing. Second probes show the sensitivity is a property of wide-separation
-comparisons rather than of the probe used to discover it: a fixed
-Einstein--de Sitter control exhibits $|L_{\mathrm{BBC}}| \approx 367$ (with
-opposite sign) and a flat $w$CDM probe ($w = -0.5$) gives
-$|L_{\mathrm{BBC}}| = 5.0$. We define covariance-weighted projection and
-fixed-shape/adaptive diagnostics, report their values, and propose paired
-bias corrections against one empirically anchored selection model ---
-reporting the verdict and its spread --- as the minimum requirement for
-cosmology-independent adjudication. All inputs are public; a complete
+The bracket measures the \emph{total} leverage of the BBC step: removing
+the correction simultaneously restores real survey selection
+($\chi^2/\mathrm{dof}$ degrades from 0.93 to 1.34), and the reconstruction
+retains the globally fitted standardization parameters, making it a hybrid
+diagnostic. Neither the magnitude nor the sign of any specifically
+reference-cosmology-conditioned component is isolated by the bracket.
+Crucially, DES has already tested that component directly:
+\citet{Camilleri2024} rerun the bias-correction simulations under
+reference cosmologies spanning distance-modulus variations of
+$\sim 0.15$~mag and find the effect subdominant to statistical
+uncertainties. We compute that the released-best-fit probe law differs in
+offset-removed shape from $\Lambda$CDM by at most $0.055$~mag over the
+sample --- a factor $\sim 3$ \emph{inside} that validated envelope. The
+finding is therefore sharper than a missing-validation claim: \emph{the
+total BBC layer carries pairwise leverage an order of magnitude larger
+than the verdict even though prior DES simulation tests indicate the
+reference-cosmology part of that leverage is small over the tested
+distance-law range.} The large-leverage, unvalidated regime begins outside
+that envelope --- our Einstein--de Sitter control ($1.8\times$ the
+envelope) exhibits $|L_{\mathrm{BBC}}| \approx 365$ --- and for
+functional forms outside the FLRW family the envelope's coverage is an
+extrapolation to be tested, not assumed. We report covariance-weighted
+projection and fixed/adaptive diagnostics, the verdict sensitivity to
+twelve released BBC-related systematic modes ($0.71$ in quadrature), and
+propose matched-simulation reruns and paired corrections as the
+completion of the validation programme. All inputs are public; a complete
 reproduction recipe is given in \S\ref{sec:repro}.
 \end{abstract}
 
@@ -104,54 +111,63 @@ distance laws being compared.
 This paper examines one such component: the BEAMS with Bias Corrections
 framework \citep{KesslerScolnic2017} used in the DES-SN5YR analysis. BBC
 uses survey simulations to estimate selection and fitting biases and
-applies an event-level correction to the standardized distances. Those
-simulations necessarily contain assumptions about the supernova
-population, intrinsic scatter, survey selection, and a fiducial
-distance--redshift relation.
+applies an event-level correction to the standardized distances. Two
+distinct cosmology inputs appear in that machinery and must not be
+conflated \citep{Camilleri2024}: the \emph{reference} cosmology used to
+generate the bias-correction simulations, and the \emph{fiducial}
+cosmology used internally while determining the standardization nuisance
+parameters and redshift-bin offsets. Throughout this paper
+``conditioning'' refers to dependence on the reference cosmology unless
+stated otherwise.
 
-The existence of this conditioning is not itself a defect. A flux-limited
-survey genuinely requires selection modelling, and simulation is an
-appropriate instrument for estimating effects that cannot be inferred from
-detected events alone. Nor is input-cosmology dependence ignored in the
-BBC literature: \citet{KesslerScolnic2017} explicitly tested variation of
-the simulation cosmology within the conventional $w$CDM neighbourhood and
-found the effect on recovered parameters to be small. That validation,
-however, spans nearby cosmologies by construction. It has little to say
-about comparisons against distance laws that are \emph{not} close to the
-simulation cosmology --- precisely the comparisons for which the
-conditioning is least benign, and the case measured here.
-
-The question addressed is narrow and empirical: how much leverage does the
-\emph{entire} BBC step have on a pairwise comparison against a
-substantially different distance law, and is that leverage small or large
-relative to the residual statistical discrimination? The experiment cannot
-separate legitimate selection-bias correction from input-cosmology
-conditioning; it measures the size and direction of the container in which
-the unknown conditioned contribution resides. This paper proposes no
-replacement cosmology. The alternative law is a probe, and readers may
-substitute any smooth one-parameter alternative and repeat the exercise.
+The existence of this conditioning is not itself a defect, and it is not
+untested. \citet{KesslerScolnic2017} varied the simulation cosmology
+within the conventional $w$CDM neighbourhood and found small effects on
+recovered parameters. More directly, \citet{Camilleri2024} rerun the
+DES-SN5YR bias-correction simulations under reference cosmologies
+differing from the baseline by up to $\sim 10\sigma$ --- distance-modulus
+variations of roughly $0.15$~mag --- including nonstandard $w_0 w_a$
+truth models, and find the impact subdominant to statistical
+uncertainties, providing an iterative prescription for cases beyond. The
+open questions are therefore quantitative and specific: how large is the
+\emph{total} BBC step's leverage on a pairwise comparison; where does a
+given alternative law sit relative to the validated reference-cosmology
+envelope; and what remains for laws outside it or outside the FLRW
+functional family. Those are the questions measured here. This paper
+proposes no replacement cosmology; the alternative law is a probe, and
+readers may substitute any smooth one-parameter alternative.
 
 \section{Data and provenance}
 \label{sec:data}
 
 We use the public DES-SN5YR Hubble-diagram release, tag v1.2
-\citep{DES2024,Sanchez2024}, corresponding to the original five-year
-cosmology analysis rather than a later reanalysis. The relevant files are
-\texttt{DES-SN5YR\_HD+MetaData.csv} (containing \texttt{zHD}, the released
-modulus \texttt{MU}, its uncertainty \texttt{MUERR\_FINAL},
-\texttt{biasCor\_mu}, SALT parameters \texttt{mB}, \texttt{x1}, \texttt{c},
-survey identifiers, and peculiar-velocity information) and the released
-systematic covariance. Per the release documentation the file
-\texttt{STAT+SYS.txt.gz} contains systematics only; the statistical term is
-carried in \texttt{MUERR\_FINAL} and the total covariance is
-$C = C_{\mathrm{sys}} + \mathrm{diag}(\texttt{MUERR\_FINAL}^2)$.
+\citep{DES2024,Sanchez2024}. The relevant files are
+\texttt{DES-SN5YR\_HD+MetaData.csv} (containing $z_{\mathrm{HD}}$,
+$z_{\mathrm{HEL}}$, the released modulus \texttt{MU}, its uncertainty
+\texttt{MUERR\_FINAL}, \texttt{biasCor\_mu}, SALT parameters \texttt{mB},
+\texttt{x1}, \texttt{c}, survey identifiers, and peculiar-velocity
+information) and the released systematic covariance. Per the release
+documentation, \texttt{STAT+SYS.txt.gz} contains systematics only; the
+statistical term is carried in \texttt{MUERR\_FINAL} and the total
+covariance is $C = C_{\mathrm{sys}} +
+\mathrm{diag}(\texttt{MUERR\_FINAL}^2)$.
 
-Applying the release quality convention ($z_{\mathrm{HD}} \geq 0.01$,
-$0 < \texttt{MUERR\_FINAL} \leq 10$) gives a fitting sample of $N = 1768$
-spanning $0.025 \leq z \leq 1.121$: 1574 DES-discovered supernovae together
-with 194 external low-redshift objects. The release version is frozen
-because the DES-SN pipeline has subsequently evolved; all numbers here
-refer to the v1.2 products.
+The v1.2 release contains 1829 Hubble-diagram entries. Our default sample
+excludes 61 effectively zero-weight entries with
+$\texttt{MUERR\_FINAL} > 10$, leaving $N = 1768$ over
+$0.025 \leq z_{\mathrm{HD}} \leq 1.121$ (1574 DES-discovered supernovae
+plus 194 external low-redshift objects); this is our diagnostic cut, not
+the official likelihood convention, which retains all 1829. As a
+robustness check, retaining all 1829 entries changes no reported number at
+the quoted precision. The release version is frozen because the DES-SN
+pipeline has subsequently evolved.
+
+Distance moduli are compared with model predictions using the official
+likelihood's redshift convention: the cosmological integral is evaluated
+at $z_{\mathrm{HD}}$ while the external luminosity-distance factor uses
+the heliocentric redshift, $\mu \propto
+5\log_{10}[(1+z_{\mathrm{HEL}})\,D_M(z_{\mathrm{HD}})]$. The probe law
+adopts the analogous deliberate assignment (\S\ref{sec:laws}).
 
 \section{The processing layers}
 \label{sec:layers}
@@ -159,8 +175,8 @@ refer to the v1.2 products.
 \subsection{Framework-neutral or shared layers}
 
 Photometric calibration and Galactic-extinction treatment are instrumental
-or astrophysical corrections rather than assumptions about the cosmological
-distance--redshift relation. The SALT light-curve fit
+or astrophysical corrections rather than assumptions about the
+cosmological distance--redshift relation. The SALT light-curve fit
 \citep{Kenworthy2021} also transforms the observed phase coordinate by the
 measured time-dilation relation; DES light curves independently show an
 approximately $(1+z)$ temporal broadening, $b = 1.003 \pm 0.005\,
@@ -194,11 +210,9 @@ onto the model difference, measured in \S\ref{sec:projection}.
 
 The 194 external low-redshift objects carry peculiar-velocity corrections
 (median $|v| \approx 121$~km\,s$^{-1}$) from flow reconstructions
-\citep{Peterson2022}. We do not treat these as evidence for the central BBC
-claim. An anchor-exclusion variant is reported in \S\ref{sec:robust} as a
-sample-composition sensitivity test only: removing those objects changes
-redshift coverage and the normalization--shape degeneracy as well as the
-correction treatment.
+\citep{Peterson2022}. We do not treat these as evidence for the central
+BBC claim. An anchor-exclusion variant is reported in \S\ref{sec:robust}
+as a sample-composition sensitivity test only.
 
 \section{Statistical question: discrimination leverage}
 \label{sec:stat}
@@ -222,8 +236,7 @@ L_{\mathrm{BBC}}
 \end{equation}
 Negative $L_{\mathrm{BBC}}$ means that applying BBC shifts the comparison
 toward Model~B relative to the reconstructed pre-BBC endpoint. The
-statement applies to the total correction only; it does not determine the
-sign of any cosmology-conditioned subcomponent.
+statement applies to the total correction only.
 
 Amplitude alone is not sufficient: a large correction can be irrelevant if
 covariance-orthogonal to the model difference, and a small one decisive if
@@ -256,12 +269,11 @@ vector.
 The sign of \texttt{biasCor\_mu} must be established before reconstructing
 a pre-BBC vector. We determine it from the data: regressing
 $(\mu_{\mathrm{target}} - m_B)$ on $(x_1, -c, 1)$ for the three candidate
-conventions, only
-$\texttt{MU} + \texttt{biasCor\_mu}$ reconstructs a Tripp relation
-\citep{Tripp1998} with physically standard coefficients. The unconstrained
-regression returns $\alpha = 0.15546 \pm 0.00038$ and
-$\beta = 3.1159 \pm 0.0037$ with rms residual $0.0165$~mag --- near the DES
-global values $\alpha = 0.16087$, $\beta = 3.11780$
+conventions, only $\texttt{MU} + \texttt{biasCor\_mu}$ reconstructs a
+Tripp relation \citep{Tripp1998} with physically standard coefficients.
+The unconstrained regression returns $\alpha = 0.15546 \pm 0.00038$ and
+$\beta = 3.1159 \pm 0.0037$ with rms residual $0.0165$~mag --- near the
+DES global values $\alpha = 0.16087$, $\beta = 3.11780$
 \citep{Vincenzi2024}; the residual offset in $\alpha$ and the rms floor
 reflect the omission of the host-mass step $\gamma$ and of per-event
 weighting from this diagnostic regression. The released modulus therefore
@@ -279,26 +291,32 @@ the error was caught by this check before circulation.
 \label{sec:laws}
 
 \emph{Model A (flat $\Lambda$CDM).} The standard spatially flat luminosity
-distance with one fitted shape parameter $\Omega_m$; the absolute
-magnitude/$H_0$ combination is degenerate with the additive offset and is
-analytically marginalized.
+distance evaluated per the official convention,
+$\mu_A \propto 5\log_{10}[(1+z_{\mathrm{HEL}})\,D_M(z_{\mathrm{HD}})]$,
+with one fitted shape parameter $\Omega_m$; the absolute magnitude/$H_0$
+combination is degenerate with the additive offset and is analytically
+marginalized.
 
 \emph{Model B (non-expanding phenomenological probe).}
 \begin{equation}
-D(z) = \frac{c}{K}\ln(1+z), \qquad
-D_L(z) = D(z)\,(1+z),
+D(z_{\mathrm{HD}}) = \frac{c}{K}\ln(1+z_{\mathrm{HD}}), \qquad
+\mu_B \propto 5\log_{10}\!\bigl[(1+z_{\mathrm{HEL}})\,
+D(z_{\mathrm{HD}})\bigr] + \Delta\mu ,
 \label{eq:modelB}
 \end{equation}
-with an attenuation term
+with attenuation
 \begin{equation}
-\Delta\mu(z) = \frac{5}{\ln 10}\,\eta\,\tau(z), \qquad
+\Delta\mu(z_{\mathrm{HD}})
+= \frac{5}{\ln 10}\,\eta\,\tau(z_{\mathrm{HD}}), \qquad
 \tau(z) = 1 - (1+z)^{-1/2},
 \label{eq:atten}
 \end{equation}
 one fitted shape parameter $\eta$, and $K$ marginalized with the offset.
-Model B supplies a smooth distance--redshift relation substantially
-separated from the fiducial family; no physical claim is attached to it in
-this paper.
+The redshift assignment is deliberate: observed-frame flux factors carry
+$z_{\mathrm{HEL}}$; the accumulated path and attenuation coordinate is
+$z_{\mathrm{HD}}$. Model B supplies a smooth distance--redshift relation
+separated from the fiducial family; no physical claim is attached to it
+here.
 
 \subsection{Headline results}
 \label{sec:headline}
@@ -306,67 +324,67 @@ this paper.
 \begin{table}[ht]
 \centering
 \caption{The sensitivity bracket ($N = 1768$, full STAT+SYS covariance,
-offset marginalized). Positive $\Delta\chi^2$ favours flat $\Lambda$CDM.}
+official redshift convention, offset marginalized). Positive
+$\Delta\chi^2$ favours flat $\Lambda$CDM. Retaining all 1829 released
+entries changes no entry at this precision.}
 \label{tab:headline}
 \begin{tabular}{lccc c}
 \toprule
 Vector & Model A & Model B & $\Delta\chi^2$ & $\chi^2/\mathrm{dof}$ \\
 \midrule
 Released (BBC-corrected)
-  & $\Omega_m = 0.35$, $\chi^2 = 1640.3$
-  & $\eta = 0.30$, $\chi^2 = 1641.9$
-  & $+1.6$ & 0.93 \\
+  & $\Omega_m = 0.352$, $\chi^2 = 1640.1$
+  & $\eta = 0.297$, $\chi^2 = 1641.1$
+  & $+1.1$ & 0.93 \\
 Reconstructed pre-BBC
-  & $\Omega_m = 0.50$, $\chi^2 = 2362.6$
-  & $\eta = 0.05$, $\chi^2 = 2375.9$
-  & $+13.3$ & 1.34 \\
+  & $\Omega_m = 0.499$, $\chi^2 = 2361.8$
+  & $\eta = 0.049$, $\chi^2 = 2374.5$
+  & $+12.8$ & 1.34 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 There is no reversal of the pairwise ordering. Applying the released BBC
-step \emph{changes} the statistic from $+13.3$ at the reconstructed
-endpoint to $+1.6$ in the released vector:
+step \emph{changes} the statistic from $+12.8$ at the reconstructed
+endpoint to $+1.1$ in the released vector:
 \begin{equation}
-L_{\mathrm{BBC}} = 1.6 - 13.3 = -11.7 ,
+L_{\mathrm{BBC}} = 1.1 - 12.8 = -11.7 ,
 \end{equation}
-a leverage of about $7.3$ times the released discrimination, directed
+a leverage of roughly eleven times the released discrimination, directed
 toward Model~B. In this comparison the total correction moves the
 statistic toward the alternative probe rather than toward the fiducial
 model; the methodological concern raised here therefore does not arise
 from objecting to a correction because it disadvantages Model~B. The
 fitted shapes are strongly sensitive to the step
-($\Omega_m: 0.50 \rightarrow 0.35$; $\eta: 0.05 \rightarrow 0.30$), which
-establishes sensitivity, not that BBC ``supplies'' either model's
+($\Omega_m: 0.499 \rightarrow 0.352$; $\eta: 0.049 \rightarrow 0.297$),
+which establishes sensitivity, not that BBC ``supplies'' either model's
 structure.
 
 \subsection{What the bracket establishes, and what it does not}
 \label{sec:limits}
 
 The bracket establishes: (i) the BBC step has substantial
-covariance-weighted leverage on this comparison; (ii) that leverage is
-large relative to the statistic actually used to discriminate the models;
-(iii) the direction of the \emph{total} correction is known. It does not
-establish: that $\Lambda$CDM conditioning creates the released
-near-degeneracy; the sign of the conditioned component; that the pre-BBC
-vector is closer to the true Hubble diagram; that Model~B is physically
-correct; or that every alternative law exhibits the same sensitivity
-(tested in \S\ref{sec:robust}).
+covariance-weighted leverage on this comparison; (ii) that leverage is an
+order of magnitude larger than the statistic used to discriminate the
+models; (iii) the direction of the \emph{total} correction is known. It
+does not establish: that reference-cosmology conditioning creates the
+released near-degeneracy; the sign of the conditioned component; that the
+pre-BBC vector is closer to the true Hubble diagram; that Model~B is
+physically correct; or that every alternative law exhibits the same
+sensitivity (tested in \S\ref{sec:robust}).
 
 Three structural caveats govern the interpretation. First, removing the
 correction restores genuine selection effects --- the degradation
 $\chi^2/\mathrm{dof}: 0.93 \rightarrow 1.34$ is the tell that both models
-are then fitting a $z$-dependent selection ramp neither describes ---
-and the released covariance is not the covariance of the reconstructed
-vector, so only differences within a row of Table~\ref{tab:headline} are
-quoted. Second, the reconstructed pre-BBC vector is a \emph{hybrid
-diagnostic} rather than the result of rerunning the analysis without BBC:
-adding \texttt{biasCor\_mu} removes the released event-level magnitude
-correction but leaves in place the globally determined standardization
-parameters $\alpha$, $\beta$, $\gamma$, together with other quantities
-obtained within the nominal analysis. A complete pre-BBC reconstruction
-would require refitting those nuisance parameters jointly with the altered
-selection treatment; the direction and magnitude of this residual
+are then fitting a $z$-dependent selection ramp neither describes --- and
+the released covariance is not the covariance of the reconstructed vector,
+so only differences within a row of Table~\ref{tab:headline} are quoted.
+Second, the reconstructed pre-BBC vector is a \emph{hybrid diagnostic}
+rather than the result of rerunning the analysis without BBC: adding
+\texttt{biasCor\_mu} removes the released event-level magnitude correction
+but leaves in place the globally determined standardization parameters
+$\alpha$, $\beta$, $\gamma$, together with other quantities obtained
+within the nominal analysis; the direction and magnitude of this residual
 nuisance-parameter conditioning are not determined by the present bracket.
 Third, writing the measured total schematically as
 \begin{equation}
@@ -376,28 +394,28 @@ L_{\mathrm{selection}} + L_{\mathrm{population}} + L_{\mathrm{scatter}}
 + L_{\mathrm{interactions}} ,
 \label{eq:decomp}
 \end{equation}
-the experiment measures the left-hand side only.
+the experiment measures the left-hand side only; the components can add,
+cancel, and interact, so no term is individually bounded by the total.
 
 \subsection{How small must the conditioned component be?}
 \label{sec:bound}
 
-The released comparison is decided by $\Delta\chi^2 = 1.6$; the total
-correction-step swing is $11.7$. For the unknown cosmology-conditioned
-contribution merely to remain smaller than the nominal discrimination
-requires $|L_{\mathrm{cosmology}}| < 1.6$, i.e.\ less than
-$1.6/11.7 \approx 14\%$ of the observed total swing --- and considerably
-smaller to be negligible. Existing near-fiducial validation does not
-establish that the cosmology-conditioned contribution satisfies this bound
-for substantially separated distance laws.
+The released comparison is decided by $\Delta\chi^2 = 1.1$; the total
+correction-step swing is $11.7$. For the reference-cosmology contribution
+merely to remain smaller than the nominal discrimination requires
+$|L_{\mathrm{cosmology}}| < 1.1$, i.e.\ below roughly $9\%$ of the
+observed total swing --- and considerably smaller to be negligible.
+\S\ref{sec:envelope} addresses how much of that requirement prior DES
+validation already discharges for this probe.
 
 \subsection{Robustness and second probes}
 \label{sec:robust}
 
 \begin{table}[ht]
 \centering
-\caption{Pairwise discrimination leverage of the BBC step for three
-distance-law probes and two analysis variants. Positive $\Delta\chi^2$
-favours flat $\Lambda$CDM (free $\Omega_m$).}
+\caption{Pairwise discrimination leverage for three distance-law probes
+and two analysis variants (official redshift convention). Positive
+$\Delta\chi^2$ favours flat $\Lambda$CDM (free $\Omega_m$).}
 \label{tab:probes}
 \begin{tabular}{lrrr}
 \toprule
@@ -406,65 +424,67 @@ $\Delta\chi^2_{\mathrm{released}}$ &
 $\Delta\chi^2_{\mathrm{preBBC}}$ &
 $L_{\mathrm{BBC}}$ \\
 \midrule
-Model B, non-expanding (headline)   & $+1.6$  & $+13.3$ & $-11.7$ \\
-Flat $w$CDM, $w = -0.5$, $\Omega_m$ fitted & $+4.1$ & $+9.1$ & $-5.0$ \\
-Einstein--de Sitter ($\Omega_m = 1$, no free shape) & $+762$ & $+395$ & $+367$ \\
+Model B, non-expanding (headline)   & $+1.1$  & $+12.8$ & $-11.7$ \\
+Flat $w$CDM, $w = -0.5$, $\Omega_m$ fitted & $+2.9$ & $+8.6$ & $-5.7$ \\
+Einstein--de Sitter ($\Omega_m = 1$, no free shape) & $+754.7$ & $+389.4$ & $+365.3$ \\
 \midrule
-Statistical-only covariance (Model B) & $+1.3$ & $+30.7$ & $-29.4$ \\
+Statistical-only covariance (Model B) & $+0.4$ & $+30.0$ & $-29.6$ \\
 DES-only, external anchors excluded (Model B) & $+6.5$ & $+9.9$ & $-3.4$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Three observations. First, the leverage exceeds the released verdict in
-every variant. Second, the sensitivity is a property of wide-separation
-comparisons rather than of the discovering probe: the Einstein--de Sitter
-control --- a completely conventional non-accelerating FLRW model with no
-free shape parameter --- exhibits leverage thirty times the headline
-value, and even a moderate-separation $w$CDM probe carries three times the
-released verdict. The Einstein--de Sitter case is a sensitivity control
-only (its absolute $\chi^2$ is catastrophic on either vector, as
-expected); what matters is $|L_{\mathrm{BBC}}| \approx 367$. Third, the
-\emph{sign} of the leverage varies by probe ($+367$, $-11.7$, $-5.0$): the
-correction moved the Einstein--de Sitter comparison in $\Lambda$CDM's
-favour and the Model-B comparison toward Model~B. The layer displays no
-consistent partisanship; its direction is set by the geometry of each
-comparison.
-
-The statistical-only variant demonstrates that covariance treatment
-changes the numerical leverage materially and cannot replace the full
-covariance in the headline. The anchor-exclusion variant is a
-sample-composition sensitivity test (\S\ref{sec:layers}); the released
-near-degeneracy is sensitive to inclusion of the low-redshift anchors, but
-attribution to the peculiar-velocity layer specifically is not established
-by it.
+BBC leverage is substantial across the tested comparisons; it exceeds the
+released discrimination in the headline Model-B comparison, the
+$w = -0.5$ probe, and the statistical-only variant, while for the
+Einstein--de Sitter control and the anchor-excluded variant the leverage,
+though large in absolute terms, is smaller than those comparisons' own
+(much larger) released margins. The sensitivity is not unique to Model B:
+substantial leverage is also observed for two additional separated
+distance-law probes. The \emph{sign} of the leverage varies by probe
+($+365$, $-11.7$, $-5.7$): the correction moved the Einstein--de Sitter
+comparison in $\Lambda$CDM's favour and the Model-B comparison toward
+Model~B, so the layer displays no consistent partisanship; its direction
+is set by the geometry of each comparison. The Einstein--de Sitter case
+is a sensitivity control only (its absolute $\chi^2$ is catastrophic on
+either vector, as expected). The statistical-only variant shows that
+covariance treatment changes the numerical leverage materially and cannot
+replace the full covariance. The anchor-exclusion variant is a
+sample-composition test: it removes redshift coverage and the
+normalization--shape lever arm along with the peculiar-velocity layer, so
+no attribution to the latter is made.
 
 \subsection{Covariance-weighted projection}
 \label{sec:projection}
 
 Evaluating Eq.~\eqref{eq:rho} with $\boldsymbol{d}$ at the released-vector
-best fits ($\Omega_m = 0.35$, $\eta = 0.30$):
+best fits ($\Omega_m = 0.352$, $\eta = 0.297$):
 \begin{equation}
-\rho_C = -0.065, \qquad
+\rho_C = -0.068, \qquad
 \lVert\widetilde{\boldsymbol b}\rVert_{C^{-1}} = 29.76, \qquad
 \lVert\widetilde{\boldsymbol d}\rVert_{C^{-1}} = 2.51 .
 \label{eq:rhovals}
 \end{equation}
-Repeating with $\boldsymbol{d}$ at the pre-BBC best fits
-($\Omega_m = 0.50$, $\eta = 0.05$) gives $\rho_C = -0.086$: the diagnostic
-is stable against the choice of evaluation point.
+Repeating with $\boldsymbol{d}$ at the pre-BBC best fits gives
+$\rho_C = -0.077$: the diagnostic is stable against the evaluation point.
 
-The geometry is the central quantitative fact of this paper. The BBC
-vector is approximately $94\%$ covariance-orthogonal to the model
-difference --- as an honest selection correction should be; it is not
-``aimed'' at the comparison --- yet its norm in the covariance metric is
-so large that the residual $6.5\%$ projection alone carries several times
-the released verdict. For the verdict to be robust, the
-\emph{conditioned part} of the correction must satisfy
+The covariance-weighted cosine is small --- the vectors are nearly
+covariance-orthogonal, as an honest selection correction should be; the
+layer is not ``aimed'' at the comparison --- yet the BBC vector's norm in
+the covariance metric is large enough that its residual projection alone
+dominates the released margin (\S\ref{sec:fixed}). The general
+requirement on the conditioned component follows from
 $2\,\lvert\widetilde{\boldsymbol b}_{\mathrm{cond}}^{T} C^{-1}
-\widetilde{\boldsymbol d}\rvert < 1.6$ --- an effective misalignment below
-about one percent. That is a precision statement about a simulation
-output which existing validation was never designed to certify.
+\widetilde{\boldsymbol d}\rvert < 1.1$:
+\begin{equation}
+\lvert\rho_{\mathrm{cond}}\rvert \,
+\lVert\widetilde{\boldsymbol b}_{\mathrm{cond}}\rVert_{C^{-1}}
+< \frac{1.1}{2\lVert\widetilde{\boldsymbol d}\rVert_{C^{-1}}}
+\simeq 0.22 ,
+\label{eq:condreq}
+\end{equation}
+a joint bound on the conditioned component's norm and alignment; no
+assumption about its norm is made.
 
 \subsection{Fixed-shape versus adaptive leverage}
 \label{sec:fixed}
@@ -479,86 +499,99 @@ L_{\mathrm{BBC}}^{\mathrm{fixed}}
    \lVert\widetilde{\boldsymbol b}\rVert_{C^{-1}}
    \lVert\widetilde{\boldsymbol d}\rVert_{C^{-1}}
  \nonumber\\
-&\simeq 2\,(-0.065)(29.76)(2.51) = -9.7 ,
+&\simeq 2\,(-0.068)(29.76)(2.51) = -10.1 ,
 \label{eq:fixed}
 \end{align}
-verified independently by direct evaluation of the fixed-shape bracket
-($-9.72$). The remainder,
+verified independently by direct evaluation of the fixed-shape bracket.
+The remainder,
 \begin{equation}
 L_{\mathrm{BBC}}^{\mathrm{adapt}}
 = L_{\mathrm{BBC}} - L_{\mathrm{BBC}}^{\mathrm{fixed}}
-= -2.0 ,
+= -1.6 ,
 \label{eq:adapt}
 \end{equation}
 is the contribution of parameter accommodation. Most of the leverage is
 direct alignment of the correction with the model difference, and the
 agreement between the projection identity and the independently evaluated
-fixed-shape bracket is an internal consistency check on the whole
-computation.
+fixed-shape bracket is an internal consistency check on the computation.
 
-\section{Isolating the cosmology-conditioned component}
+\section{The reference-cosmology component}
 \label{sec:isolate}
 
-\subsection{The DES systematic subspace: computed}
+\subsection{Where the probe sits in the validated envelope}
+\label{sec:envelope}
+
+\citet{Camilleri2024} distinguish the reference cosmology (generating the
+bias-correction simulations) from the fiducial cosmology (used inside the
+BBC nuisance fit) and test both dependencies directly, rerunning the
+simulation chain under reference cosmologies as far as $\sim 10\sigma$
+from the baseline --- distance-modulus variations of roughly $0.15$~mag,
+including nonstandard $w_0 w_a$ truth models --- and find the effect on
+the recovered cosmology subdominant to DES statistical uncertainties.
+
+We compute where the present comparison sits relative to that envelope.
+After covariance-weighted removal of the free offset, the
+released-best-fit Model B differs from flat $\Lambda$CDM by at most
+$0.055$~mag over the sample ($0.035$~mag against $\Omega_m = 0.315$), and
+the pre-BBC-best-fit curve by at most $0.053$~mag --- factors of
+$\sim 3$--$4$ \emph{inside} the validated range. By contrast the
+Einstein--de Sitter control differs by $0.276$~mag, a factor $1.8$
+\emph{outside} it, and is precisely the probe exhibiting two orders of
+magnitude larger leverage.
+
+The conclusion is accordingly sharper than a missing-validation claim,
+and cuts in the incumbent's favour for the headline comparison: prior DES
+simulation tests indicate the reference-cosmology part of the measured
+leverage is small over a distance-law range that \emph{contains} the
+released-best-fit probe. Two caveats keep the question open at the edges:
+the envelope was established with FLRW-family reference simulations, so
+its coverage of non-FLRW functional forms (such as Model B's logarithmic
+distance plus saturating attenuation) is an inference from
+distance-modulus proximity rather than a direct rerun; and comparisons
+against laws outside the envelope --- where the leverage is largest ---
+remain unvalidated. The direct completion for both cases is a matched
+rerun of the bias-correction simulations with the alternative law as the
+reference input, comparing
+$L_{\mathrm{cosmology}} =
+\Delta\chi^2(\boldsymbol{b}_B) - \Delta\chi^2(\boldsymbol{b}_A)$
+against the released margin; \citet{Camilleri2024} provide the iterative
+prescription such a test would follow.
+
+\subsection{Sensitivity to the released BBC-related systematic modes}
 \label{sec:syssub}
 
-The release provides single-systematic covariance blocks for the
-correction layer's simulation inputs: the intrinsic-scatter model (BS20),
-dust/population realizations (P21SYS1--3, P21\_HOSTCOLOR, W22\_AGE), host
-library (SVAHOSTLIB), selection efficiency (HOSTEFFshift), core-collapse
-likelihood (CClikelihood), and classifier swaps (SNNtraining, SNIRF,
-SCONE). Each block is (near) rank-1, $C_k \approx
-\boldsymbol{d}_k \boldsymbol{d}_k^{T}$, the covariance of a single input
-swap. Perturbing the released moduli by $\pm\boldsymbol{d}_k$ and
-refitting both models yields per-input verdict shifts between $\pm 0.01$
-and $\pm 0.40$ $\chi^2$ units, with quadrature sum
-\begin{equation}
-\Bigl(\textstyle\sum_k \max\bigl(|\delta\Delta\chi^2_k|\bigr)^2
-\Bigr)^{1/2} = 0.71
-\label{eq:quad}
-\end{equation}
-against the released margin of $1.6$. Within DES's own declared error
-budget, then, the conditioned component does not overturn the verdict ---
-the near-fiducial validation of \citet{KesslerScolnic2017} is confirmed on
-this dataset by an independent route. The caveat is the one that motivates
-this paper: every one of these variations is computed inside $\Lambda$CDM
-simulations. They measure input sensitivity \emph{within the
-neighbourhood}, not the conditioning against a distant distance law. The
-finding is therefore three-tiered: total step leverage $\approx 12$
-(\S\ref{sec:headline}); within-neighbourhood conditioned component
-$\leq 0.7$ (this section); conditioning against distant laws --- bounded
-between those figures --- measured by no one.
-
-\subsection{Rerunning BBC under distant input laws}
-
-The direct test regenerates the correction with the simulation's input
-distance--redshift relation changed, all other architecture held fixed.
-With correction vectors $\boldsymbol{b}_A$ (fiducial input) and
-$\boldsymbol{b}_B$ (distant-alternative input), the discriminating
-quantity is
-\begin{equation}
-L_{\mathrm{cosmology}} =
-\Delta\chi^2(\boldsymbol{b}_B) - \Delta\chi^2(\boldsymbol{b}_A) ,
-\label{eq:lcosmo}
-\end{equation}
-to be compared with $1.6$. If it is of order $0.05$ the concern raised
-here is largely resolved; if of order $2$ the nominal discrimination is
-not conditioning-independent. Both outcomes are scientifically useful; the
-paper asks for the measurement, not a presumption.
+The release provides single-systematic covariance blocks for BBC-related
+inputs: the intrinsic-scatter model (BS20), dust/population realizations
+(P21SYS1--3, P21\_HOSTCOLOR, W22\_AGE), host library (SVAHOSTLIB),
+selection efficiency (HOSTEFFshift), core-collapse likelihood
+(CClikelihood), and classifier swaps (SNNtraining, SNIRF, SCONE). None of
+these is a reference-cosmology variation, so this test does \emph{not}
+isolate the conditioned component; it measures the verdict movement
+carried by the released systematic budget these modes represent. Each
+block is (near) rank-1, $C_k \approx \boldsymbol{d}_k
+\boldsymbol{d}_k^{T}$; perturbing the released moduli by
+$\pm\boldsymbol{d}_k$ and refitting both models yields per-input verdict
+shifts between $\pm 0.01$ and $\pm 0.40$ $\chi^2$ units, with quadrature
+sum $0.71$ against the released margin of $1.1$. The quadrature
+sensitivity of the pairwise verdict to these twelve selected modes is
+therefore below the margin --- the declared budget they represent does not
+by itself overturn the verdict --- while the reference-cosmology question
+is addressed by the simulation reruns of \S\ref{sec:envelope}, not by
+this decomposition.
 
 \subsection{Paired corrections, and the definitive instrument}
 
 A useful intermediate is a paired-correction experiment: one common,
 empirically anchored survey-selection model; corrections computed under
-each candidate law; the verdict reported together with its spread
-$S_{\mathrm{conditioning}} = |\Delta\chi^2_A - \Delta\chi^2_B|$ across the
-two schemes. If the spread is comparable to the claimed discrimination,
-corrected-modulus comparison has not produced a conditioning-independent
-verdict. The definitive instrument is likelihood-level forward modelling:
-each candidate law propagated through the same population,
-intrinsic-scatter, cadence, detection, classification, and cut
-architecture, compared with the survey at the likelihood level. Selection
-is a generative problem; simulation should not be eliminated but shared.
+each candidate law; the verdict reported together with its spread across
+the two schemes. If the spread is comparable to the claimed
+discrimination, corrected-modulus comparison has not produced a
+conditioning-independent verdict. The definitive instrument is
+likelihood-level forward modelling: each candidate law propagated through
+the same population, intrinsic-scatter, cadence, detection,
+classification, and cut architecture, compared with the survey at the
+likelihood level. Selection is a generative problem; simulation should
+not be eliminated but shared.
 
 \section{Reproduction}
 \label{sec:repro}
@@ -566,104 +599,110 @@ is a generative problem; simulation should not be eliminated but shared.
 The analysis requires the public v1.2 release and a scientific Python
 environment; the reference implementation is at
 \href{https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}{github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}
-(six scripts; each regenerates the numbers of the section named).
+(seven scripts; each regenerates the numbers of the section named).
 
 \begin{enumerate}
 \item \emph{Freeze the data.} Fetch \texttt{DES-SN5YR\_HD+MetaData.csv}
-  and \texttt{STAT+SYS.txt.gz} at tag v1.2; record hashes
-  (\texttt{data/fetch.sh}).
-\item \emph{Load and clean.} Apply the release quality convention; confirm
-  $N = 1768$ and the covariance construction
+  and \texttt{STAT+SYS.txt.gz} at tag v1.2 (\texttt{data/fetch.sh});
+  the twelve single-systematic blocks via
+  \texttt{data/fetch\_systematics.sh}; record hashes.
+\item \emph{Load and clean.} Default cut $\texttt{MUERR\_FINAL} \leq 10$
+  gives $N = 1768$; the all-1829 variant is one environment flag. Build
   $C = C_{\mathrm{sys}} + \mathrm{diag}(\texttt{MUERR\_FINAL}^2)$
   (positive-definite; $C_{\mathrm{sys}}$ alone is not).
 \item \emph{Establish the sign empirically} (\texttt{sign\_check.py};
   \S\ref{sec:sign}). Do not proceed until this passes.
 \item \emph{Characterize the layer} without reference to Model B: median,
   extrema, binned medians, regression slope.
-\item \emph{Implement both laws} exactly as \S\ref{sec:laws}; marginalize
-  the offset analytically; never fit $H_0$, $K$, or $M$ alongside.
-\item \emph{Fit the released vector} (\texttt{bracket.py}); confirm
-  $\Delta\chi^2 = +1.6$.
-\item \emph{Reconstruct} $\mu_{\mathrm{preBBC}}$ per
-  Eq.~\eqref{eq:prebbc}; refit; confirm $+13.3$; report
-  $L_{\mathrm{BBC}}$.
+\item \emph{Implement both laws} exactly as \S\ref{sec:laws}, including
+  the $z_{\mathrm{HD}}$/$z_{\mathrm{HEL}}$ convention; marginalize the
+  offset analytically.
+\item \emph{Fit and bracket} (\texttt{bracket.py}); confirm
+  Table~\ref{tab:headline} and $L_{\mathrm{BBC}} = -11.7$.
 \item \emph{Projection and decomposition} (\texttt{projection.py});
-  confirm Eqs.~\eqref{eq:rhovals}--\eqref{eq:adapt}, including the
+  confirm Eqs.~\eqref{eq:rhovals}--\eqref{eq:adapt} including the
   identity check.
 \item \emph{Robustness and probes} (\texttt{robustness.py},
   \texttt{probes.py}); confirm Table~\ref{tab:probes}.
-\item \emph{Systematic subspace} (\texttt{isolate\_conditioning.py};
-  requires \texttt{SingleSYS\_CovMatrix/}); confirm
-  Eq.~\eqref{eq:quad}.
+\item \emph{Envelope} (\texttt{envelope.py}); confirm the
+  \S\ref{sec:envelope} placements.
+\item \emph{Systematic modes} (\texttt{bbc\_systematic\_modes.py});
+  confirm the $0.71$ quadrature.
 \end{enumerate}
 
 \emph{Falsification criterion.} The central claim fails if an independent
-implementation with the verified sign convention, frozen v1.2 data,
-matched covariance ordering, full covariance, and correct offset
-marginalization produces a correction-step swing small relative to the
-released discrimination. We invite that check specifically. The first
-major implementation error found by this procedure was the authors' own
-sign error (\S\ref{sec:sign}); that is why the procedure is included.
+implementation with the verified sign convention, frozen v1.2 data, the
+official redshift convention, matched covariance ordering, full
+covariance, and correct offset marginalization produces a correction-step
+swing that is not large relative to the released discrimination. We
+invite that check specifically. The first two implementation errors found
+by this procedure were the authors' own (a sign-convention error and a
+redshift-convention simplification), both corrected before freezing;
+that is why the procedure is included.
 
 \section{Discussion}
 
 The result should not be read as an indictment of simulation-based bias
-correction. A flux-limited survey requires a model of the objects it fails
-to observe, and the pre-BBC endpoint demonstrates the point as clearly as
-it demonstrates sensitivity: the goodness of fit deteriorates
-substantially when the correction is backed out. The methodological issue
-arises only when a corrected data product is used to distinguish models
-whose distance--redshift relations are far from the one used in the
-simulations. Two questions must not be conflated: whether BBC successfully
-corrects survey bias when the assumed and tested cosmologies are near one
-another (existing validation, plus \S\ref{sec:syssub}, support this), and
-whether the corrected Hubble diagram is effectively neutral when
-discriminating against a substantially different law (untested). For the
-pair examined here the total step carries $11.7$ units of leverage against
-a $1.6$-unit verdict; a possible conditioning effect lives inside a
-transformation whose leverage is much larger than the verdict, with a
-residual projection requirement at the one-percent level
-(\S\ref{sec:projection}). The paper asks for a measurement, not a
-presumption.
+correction. A flux-limited survey requires a model of the objects it
+fails to observe, and the pre-BBC endpoint demonstrates the point as
+clearly as it demonstrates sensitivity: the goodness of fit deteriorates
+substantially when the correction is backed out. Nor should it be read as
+a claim that DES has not tested cosmology dependence:
+\citet{Camilleri2024} tested the reference-cosmology dependence directly
+over a substantial envelope and found it small there, and the headline
+comparison of this paper sits inside that envelope.
+
+What the measurements here add is the size of the container: the total
+BBC step carries roughly eleven times the released margin in pairwise
+leverage, dominated by direct covariance alignment rather than parameter
+accommodation, with a probe-dependent sign. When the correction step is
+that much larger than the verdict, the verdict's meaning rests entirely
+on the demonstrated smallness of the conditioned component --- which
+existing validation supplies \emph{within} its envelope and not outside
+it, and supplies by simulation rerun for FLRW-family forms rather than by
+direct test of non-FLRW functional shapes. The completion is specific:
+matched reruns with alternative laws as reference input, paired
+corrections against an empirically anchored selection model, and
+ultimately likelihood-level forward modelling. The paper asks for those
+measurements, not a presumption in either direction.
 
 \section{Conclusion}
 
 The DES-SN5YR v1.2 release carries a simulation-derived BBC correction
-with substantial redshift structure. For the probes examined the released
-vector gives $\Delta\chi^2 = +1.6$ (Model B), while the reconstructed
-pre-BBC vector gives $+13.3$; the pairwise discrimination leverage is
-$L_{\mathrm{BBC}} = -11.7$, about $7.3$ times the released
-discrimination, directed toward the probe. Second probes establish the
-pattern as a property of wide-separation comparisons ---
-Einstein--de Sitter, $|L| \approx 367$ with opposite sign; $w$CDM
-($w = -0.5$), $|L| = 5.0$ --- with probe-dependent sign and hence no
-consistent partisanship. The BBC vector is $94\%$ covariance-orthogonal to
-the model difference, yet its residual projection alone carries six times
-the verdict; most of the leverage is direct alignment
-($L^{\mathrm{fixed}} = -9.7$) rather than parameter accommodation
-($L^{\mathrm{adapt}} = -2.0$). DES's own single-systematic modes bound the
-conditioned component at $\leq 0.7$ units within the $\Lambda$CDM
-neighbourhood; no bound exists for distant laws, and for the released
-verdict to be meaningful the conditioned contribution must be below $14\%$
-of the measured swing. That requirement should be tested rather than
-assumed --- by systematic-mode propagation (done here), by matched reruns
-of the simulation chain under distant input laws, and ultimately by
-likelihood-level forward modelling through a shared survey architecture.
-Until then, few-$\Delta\chi^2$ discrimination between a fiducial family
-and a substantially different distance law should be interpreted as
-conditional on the demonstrated neutrality of the simulation-derived
-correction layer, not assumed to possess that neutrality by construction.
+with substantial redshift structure. Under the official redshift
+convention the released vector gives $\Delta\chi^2 = +1.1$ (Model B
+probe), the reconstructed pre-BBC vector $+12.8$; the pairwise
+discrimination leverage is $L_{\mathrm{BBC}} = -11.7$, roughly eleven
+times the released discrimination, directed toward the probe, and
+unchanged when all 1829 entries are retained. Most of the leverage is
+direct covariance alignment ($L^{\mathrm{fixed}} = -10.1$) rather than
+parameter accommodation ($-1.6$). Two further probes show the
+sensitivity is not unique to the discovering law, with probe-dependent
+sign and hence no consistent partisanship. The released-best-fit probe
+lies a factor $\sim 3$ inside the reference-cosmology envelope validated
+by \citet{Camilleri2024}, so for this comparison prior DES simulation
+tests indicate the conditioned component of the leverage is small; the
+unvalidated regime begins outside that envelope --- where our
+Einstein--de Sitter control shows two orders of magnitude larger leverage
+--- and includes the direct coverage of non-FLRW functional forms. The
+quantitative requirement, Eq.~\eqref{eq:condreq}, and the completion
+programme (matched reference-input reruns, paired corrections,
+likelihood-level forward modelling) define what remains to be measured
+before few-$\Delta\chi^2$ discrimination against distance laws far from
+the reference family can be considered conditioning-independent.
 
 \section*{Data availability}
 
-All observational inputs are public DES-SN5YR v1.2 data products. Analysis
-code is archived under DOI
+All observational inputs are public DES-SN5YR v1.2 data products.
+Analysis code is archived under DOI
 \href{https://doi.org/10.5281/zenodo.22022089}{\paperdoi} and maintained
-at \href{https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}{github.com/tracyphasespace/Model-Discrimination-DES-SN5YR},
+at
+\href{https://github.com/tracyphasespace/Model-Discrimination-DES-SN5YR}{github.com/tracyphasespace/Model-Discrimination-DES-SN5YR},
 including the raw griz light curves for all 8{,}293 DES transient
 candidates, exact input provenance, the empirical sign test, all headline
-fits, robustness variants, projection diagnostics, and the
-systematic-subspace propagation. No proprietary data were used.
+fits, robustness variants, projection diagnostics, the envelope
+comparison, and the systematic-mode propagation. No proprietary data were
+used.
 
 \section*{Acknowledgments}
 
@@ -712,10 +751,8 @@ This paper contains no proposed cosmological framework. The law of
 discrimination to a simulation-derived correction layer. A reader may
 reject that law physically without affecting the empirical
 characterization of \texttt{biasCor\_mu}, the reconstruction of the
-pre-BBC vector, or the methodological requirement that the
-cosmology-conditioned component be measured when the correction step has
-leverage substantially larger than the verdict. A separate treatment of
-the propagation physics motivating the functional form of Model B is
-logically independent of this analysis.
+pre-BBC vector, the envelope placement, or the completion programme
+defined above. A separate treatment of the propagation physics motivating
+the functional form of Model B is logically independent of this analysis.
 
 \end{document}

@@ -12,7 +12,7 @@ L_fixed = -9.7, L_adapt = -2.0 (L_total = -11.7).
 import numpy as np
 from bracket import load, mu_modelB, mu_lcdm
 
-ETA_REL, OM_REL = 0.30, 0.35   # released-vector best fits (bracket.py)
+ETA_REL, OM_REL = 0.297, 0.352  # released-vector best fits (bracket.py, DES zHD/zHEL convention)
 L_TOTAL = -11.7
 
 
@@ -30,7 +30,8 @@ def main():
         r = proj(r)
         return r @ Ci @ r
 
-    mA, mB = mu_lcdm(z, OM_REL), mu_modelB(z, ETA_REL)
+    zhel = hd.zHEL.to_numpy()
+    mA, mB = mu_lcdm(z, zhel, OM_REL), mu_modelB(z, zhel, ETA_REL)
     b, d = proj(hd.biasCor_mu.to_numpy()), proj(mB - mA)
     nb, nd = np.sqrt(b @ Ci @ b), np.sqrt(d @ Ci @ d)
     rho = (b @ Ci @ d) / (nb * nd)
@@ -41,7 +42,11 @@ def main():
     L_fixed = (q(MU - mB) - q(MU - mA)) - (q(pre - mB) - q(pre - mA))
     print(f"L_fixed = {L_fixed:+.2f}   (identity 2*rho*|b|*|d| = {2*rho*nb*nd:+.2f})")
     print(f"L_adapt = {L_TOTAL - L_fixed:+.2f}   (L_total = {L_TOTAL})")
-    print("\nReading: the BBC vector is ~94% covariance-orthogonal to the model")
-    print("difference — but at |b| ~ 30, the residual 6.5% projection alone")
-    print("carries ~6x the released verdict. For the verdict to be safe, the")
-    print("CONDITIONED part of b must satisfy 2|b_cond . d|_Cinv < 1.6.")
+    m = 1.1  # released-vector margin under the DES zHD/zHEL convention
+    print(f"\nReading: the vectors are nearly covariance-orthogonal (small cosine),")
+    print(f"but |b| is large enough that the residual projection dominates the")
+    print(f"released margin. General requirement on the conditioned component:")
+    print(f"|rho_cond| * |b_cond|_Cinv < margin/(2*|d|) = {m/(2*nd):.3f}")
+
+if __name__ == "__main__":
+    main()

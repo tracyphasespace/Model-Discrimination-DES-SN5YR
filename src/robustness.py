@@ -8,12 +8,12 @@ from bracket import load, make_chi2, fit
 
 def report(tag, hd, C):
     chi2 = make_chi2(C)
-    z = hd.zHD.to_numpy()
+    zhd, zhel = hd.zHD.to_numpy(), hd.zHEL.to_numpy()
     b = hd.biasCor_mu.to_numpy()
     out = []
     for label, mu in [("released", hd.MU.to_numpy()),
                       ("uncorrected", hd.MU.to_numpy() + b)]:
-        r = fit(chi2, z, mu)
+        r = fit(chi2, zhd, zhel, mu)
         out.append(f"{label}: D={r['chi2_B'] - r['chi2_A']:+.1f} "
                    f"(eta={r['eta']:.2f}, Om={r['om']:.2f})")
     print(f"{tag:32s} " + " | ".join(out))

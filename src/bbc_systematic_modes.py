@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""Isolate the conditioning component within DES's own error budget (paper §5.5).
+"""Quadrature sensitivity of the pairwise verdict to twelve selected
+BBC-related systematic modes (paper Section 6.1).
 
-The release ships single-systematic covariance blocks for the bias-correction
-layer's simulation inputs (scatter model, dust/population realizations, host
-library, selection efficiency, classifier swaps). Each is (near) rank-1:
-C_k ~ d_k d_k^T where d_k is the modulus shift from swapping that input.
-Perturb the released moduli by +/- d_k, refit both models, and record the
-verdict shift. The quadrature over blocks measures the conditioning-INPUT
-sensitivity as DES themselves budget it — i.e. within the LCDM neighborhood.
+The release ships single-systematic covariance blocks for BBC-related
+inputs (scatter model, dust/population realizations, host library,
+selection efficiency, classifier swaps). NONE of these is a
+reference-cosmology variation, so this script does NOT isolate the
+cosmology-conditioned component; it measures the verdict movement carried
+by the released systematic budget represented by these twelve modes.
+Reference-cosmology dependence is addressed by the simulation reruns of
+Camilleri et al. (2024) — see envelope.py.
 
-Expected (v1.2): individual shifts +/-0.01 to +/-0.40; quadrature ~0.7 chi2
-units against the 1.6 margin. DES's own budget therefore certifies the
-verdict within the neighborhood; the unvalidated territory is the remainder
-between this 0.7 and the bracket's ~12-unit total leverage.
+Each block is (near) rank-1: C_k ~ d_k d_k^T. Perturb the released moduli
+by +/- d_k, refit both models, record the verdict shift; quadrature over
+blocks. Expected (v1.2): individual shifts to +/-0.4; quadrature ~0.7 chi2
+units against the ~1-unit released margin.
 
 Requires the SingleSYS_CovMatrix/ directory from the release (see data/fetch.sh).
 """
@@ -40,10 +42,16 @@ def main():
 
     chi2 = make_chi2(C)
     z = hd.zHD.to_numpy()
+    zhel = hd.zHEL.to_numpy()
 
+    from scipy.optimize import minimize_scalar
     def verdict(mu_obs):
-        cq = min(chi2(mu_obs - mu_modelB(z, e)) for e in np.arange(0, 1.5, 0.01))
-        cl = min(chi2(mu_obs - mu_lcdm(z, o)) for o in np.arange(0.02, 0.7, 0.01))
+        cq = minimize_scalar(lambda e: chi2(mu_obs - mu_modelB(z, zhel, e)),
+                             bounds=(0.0, 2.0), method="bounded",
+                             options={"xatol": 1e-3}).fun
+        cl = minimize_scalar(lambda o: chi2(mu_obs - mu_lcdm(z, zhel, o)),
+                             bounds=(0.01, 1.2), method="bounded",
+                             options={"xatol": 1e-3}).fun
         return cq - cl
 
     base = verdict(hd.MU.to_numpy())
@@ -65,10 +73,10 @@ def main():
 
     print(f"\nquadrature of max shifts: {np.sqrt(tot2):.2f} chi2 units "
           f"(released-vector margin: {base:+.2f})")
-    print("Interpretation: this measures input sensitivity WITHIN the LCDM")
-    print("neighborhood — DES's own budget. The unvalidated conditioning against")
-    print("distant distance laws lies between this figure and the bracket's")
-    print("total-leverage bound (bracket.py).")
+    print("Interpretation: the released DES systematic budget represented by")
+    print("these twelve modes moves the verdict by less than the released")
+    print("margin. This does NOT bound the reference-cosmology component;")
+    print("see envelope.py / Camilleri et al. (2024) for that question.")
 
 
 if __name__ == "__main__":

@@ -16,7 +16,12 @@ import pandas as pd
 DATA = os.environ.get("BRACKET_DATA", os.path.join(os.path.dirname(__file__), "..", "data"))
 
 
-def load():
+def load(all_entries=False):
+    """Default sample excludes 61 effectively zero-weight entries
+    (MUERR_FINAL > 10) -> N = 1768; this is OUR diagnostic cut, not the DES
+    likelihood convention (which uses all 1829 with zHD > 0). Pass
+    all_entries=True (or env BRACKET_ALL_1829=1) for the official-sample
+    robustness variant."""
     hd_all = pd.read_csv(os.path.join(DATA, "DES-SN5YR_HD+MetaData.csv"))
     with gzip.open(os.path.join(DATA, "STAT+SYS.txt.gz"), "rt") as f:
         n = int(f.readline())
@@ -25,8 +30,11 @@ def load():
         raise ValueError("covariance dimension mismatch")
     # statistical term is in MUERR_FINAL (release README); C_sys alone is not PD
     C_all = c_sys + np.diag(hd_all.MUERR_FINAL.to_numpy() ** 2)
-    sel = ((hd_all.zHD >= 0.01) & (hd_all.MUERR_FINAL > 0)
-           & (hd_all.MUERR_FINAL <= 10)).to_numpy()
+    if all_entries or os.environ.get("BRACKET_ALL_1829", "0") == "1":
+        sel = (hd_all.zHD > 0).to_numpy()
+    else:
+        sel = ((hd_all.zHD >= 0.01) & (hd_all.MUERR_FINAL > 0)
+               & (hd_all.MUERR_FINAL <= 10)).to_numpy()
     hd = hd_all[sel].reset_index(drop=True)
     return hd, C_all[np.ix_(sel, sel)]
 
@@ -42,55 +50,66 @@ def make_chi2(C):
     return chi2
 
 
-def mu_modelB(z, eta):
-    """Non-expanding probe law: D = (c/K) ln(1+z), D_L = D (1+z), plus
-    attenuation (5/ln10) * eta * [1 - (1+z)^(-1/2)]. K absorbed in offset."""
-    return 5 * np.log10((1 + z) * np.log1p(z)) + (5 / np.log(10)) * eta * (1 - (1 + z) ** -0.5)
+# Redshift convention (matches the official DES v1.2 likelihood): the
+# cosmological integral uses zHD; the external luminosity-distance factor
+# uses the HELIOCENTRIC redshift, mu ~ 5 log10[(1+zHEL) * D_M(zHD)].
+# Model B adopts the analogous deliberate assignment: observed-frame flux
+# factors (photon energy + arrival rate) -> (1+zHEL); the accumulated
+# path/attenuation coordinate -> zHD.
+
+def mu_modelB(zhd, zhel, eta):
+    """Non-expanding probe: D = (c/K) ln(1+zHD); external factor (1+zHEL);
+    attenuation (5/ln10) * eta * [1 - (1+zHD)^(-1/2)]. K absorbed in offset."""
+    return (5 * np.log10((1 + zhel) * np.log1p(zhd))
+            + (5 / np.log(10)) * eta * (1 - (1 + zhd) ** -0.5))
 
 
-def mu_lcdm(z, om, n_grid=400):
-    zs = np.linspace(0, z.max(), n_grid)
+def mu_lcdm(zhd, zhel, om, n_grid=4000):
+    zs = np.linspace(0, zhd.max(), n_grid)
     zm = 0.5 * (zs[1:] + zs[:-1])
     integ = np.concatenate([[0], np.cumsum(np.diff(zs) / np.sqrt(om * (1 + zm) ** 3 + 1 - om))])
-    return 5 * np.log10((1 + z) * np.interp(z, zs, integ))
+    return 5 * np.log10((1 + zhel) * np.interp(zhd, zs, integ))
 
 
-def fit(chi2, z, mu_obs):
-    etas = np.arange(0.0, 1.5001, 0.01)
-    cq = [chi2(mu_obs - mu_modelB(z, e)) for e in etas]
-    iq = int(np.argmin(cq))
-    oms = np.arange(0.02, 0.7001, 0.01)
-    cl = [chi2(mu_obs - mu_lcdm(z, o)) for o in oms]
-    il = int(np.argmin(cl))
-    return dict(eta=etas[iq], chi2_B=cq[iq], om=oms[il], chi2_A=cl[il])
+def fit(chi2, zhd, zhel, mu_obs):
+    from scipy.optimize import minimize_scalar
+    rB = minimize_scalar(lambda e: chi2(mu_obs - mu_modelB(zhd, zhel, e)),
+                         bounds=(0.0, 2.0), method="bounded",
+                         options={"xatol": 1e-4})
+    rA = minimize_scalar(lambda o: chi2(mu_obs - mu_lcdm(zhd, zhel, o)),
+                         bounds=(0.01, 1.2), method="bounded",
+                         options={"xatol": 1e-4})
+    return dict(eta=rB.x, chi2_B=rB.fun, om=rA.x, chi2_A=rA.fun)
 
 
 def main():
-    hd, C = load()
+    all_1829 = os.environ.get("BRACKET_ALL_1829", "0") == "1"
+    hd, C = load(all_entries=all_1829)
     chi2 = make_chi2(C)
-    z = hd.zHD.to_numpy()
-    print(f"N = {len(hd)}, z in [{z.min():.3f}, {z.max():.3f}]")
+    zhd = hd.zHD.to_numpy()
+    zhel = hd.zHEL.to_numpy()
+    print(f"N = {len(hd)}, zHD in [{zhd.min():.3f}, {zhd.max():.3f}]"
+          + ("  [ALL-1829 variant]" if all_1829 else "  [default N=1768 cut]"))
 
     b = hd.biasCor_mu.to_numpy()
     print(f"\nbiasCor_mu: median {np.median(b):+.4f}, range [{b.min():+.3f}, {b.max():+.3f}], "
-          f"linear slope {np.polyfit(z, b, 1)[0]:+.4f} mag/z")
+          f"linear slope {np.polyfit(zhd, b, 1)[0]:+.4f} mag/z")
 
     results = {}
     for label, mu in [("released", hd.MU.to_numpy()),
                       ("uncorrected (MU + biasCor)", hd.MU.to_numpy() + b)]:
-        r = fit(chi2, z, mu)
+        r = fit(chi2, zhd, zhel, mu)
         d = r["chi2_B"] - r["chi2_A"]
         results[label] = d
         print(f"\n{label}:")
-        print(f"  Model A (LCDM):  Om  = {r['om']:.2f}  chi2 = {r['chi2_A']:.1f}")
-        print(f"  Model B (probe): eta = {r['eta']:.2f}  chi2 = {r['chi2_B']:.1f}")
+        print(f"  Model A (LCDM):  Om  = {r['om']:.3f}  chi2 = {r['chi2_A']:.1f}")
+        print(f"  Model B (probe): eta = {r['eta']:.3f}  chi2 = {r['chi2_B']:.1f}")
         print(f"  Delta chi2 (B - A) = {d:+.1f}  ->  "
               f"{'A (LCDM) ahead' if d > 0 else 'B ahead'}")
 
     swing = results["uncorrected (MU + biasCor)"] - results["released"]
     print(f"\nSWING = {swing:+.1f} chi2 units "
           f"({abs(swing / results['released']):.0f}x the released-vector verdict)")
-    print("The verdict is correction-dominated if |swing| exceeds |verdict|.")
 
 
 if __name__ == "__main__":
