@@ -100,9 +100,10 @@ independent tests like this one possible. Code: MIT.
 ## Companion paper
 
 *A Static-Universe Two-Channel Photon Propagation Model Confronted with
-DES-SN5YR* (McSheery 2026, Version 7.0, DOI
-[10.5281/zenodo.22031627](https://doi.org/10.5281/zenodo.22031627);
-prior records: Draft 6 [10.5281/zenodo.22031121](https://doi.org/10.5281/zenodo.22031121),
+DES-SN5YR* (McSheery 2026, Version 8.0, DOI
+[10.5281/zenodo.22032094](https://doi.org/10.5281/zenodo.22032094);
+prior records: V7 [10.5281/zenodo.22031627](https://doi.org/10.5281/zenodo.22031627),
+Draft 6 [10.5281/zenodo.22031121](https://doi.org/10.5281/zenodo.22031121),
 Draft 5 [10.5281/zenodo.22025329](https://doi.org/10.5281/zenodo.22025329)) presents
 the propagation physics motivating this paper's probe law; its code lives in
 [Static-Universe-DES-SN5YR](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR).
