@@ -118,3 +118,10 @@ history only. Two disclosed self-corrections: an early draft's
 draft 4's numbers used a simplified redshift convention, corrected to the
 official zHD/zHEL treatment in 4.1 (headline moved +1.6 → +1.1, swing
 unchanged at 11.7).
+
+## Acknowledgments
+
+The author would like to thank Anthropic, Google, and OpenAI for their
+excellent tools which enabled the scripts and mathematical assistance as
+well as collaborative/adversarial interactions to resolve the thousands
+of details at the speed of electrons.
