@@ -1,5 +1,6 @@
 name: numerics
 on:
+  workflow_dispatch:
   push:
     paths: ['src/**', 'data/fetch*.sh', 'requirements.txt', '.github/workflows/numerics.yml']
 jobs:
