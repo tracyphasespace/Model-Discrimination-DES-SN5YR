@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Camilleri envelope comparison (Draft 4.1, Section 6).
+"""Camilleri amplitude comparison (Draft 4.1, Section 6).
 
 Camilleri et al. (2024, MNRAS 533, 2615) tested the BBC REFERENCE-cosmology
 dependence (the cosmology used to generate the bias-correction simulations,
@@ -7,12 +7,14 @@ distinct from the FIDUCIAL cosmology used inside the BBC nuisance fit) with
 simulation reruns spanning distance-modulus variations of ~0.15 mag and
 found the effect subdominant to DES statistical uncertainties.
 
-This script measures where each probe's offset-removed shape difference from
-LCDM sits relative to that envelope. Expected: released-best-fit Model B
-(eta ~ 0.30) lies ~3x INSIDE the envelope (max |dmu| ~ 0.055 mag), so the
-near-degenerate released comparison operates within DES's validated
-reference-cosmology range; Einstein-de Sitter lies far outside, consistent
-with its far larger leverage.
+SCOPE: this is an AMPLITUDE comparison -- each probe's maximum
+offset-removed |dmu| from LCDM against the ~0.15 mag scale of the Camilleri
+reference variations. Their formal validation criterion is a SHAPE envelope
+(the boundary reference curves of their Fig. 4e); the rigorous pointwise
+containment test against those boundary cosmologies is the named upgrade.
+Expected: released-best-fit Model B departs by at most ~0.055 mag (well
+below the tested amplitude); Einstein-de Sitter by ~0.276 mag (well above),
+consistent with its far larger leverage.
 """
 import numpy as np
 from bracket import load, make_chi2, mu_modelB, mu_lcdm
@@ -46,12 +48,13 @@ def main():
         dt = proj(d)
         mx = np.abs(dt).max()
         rel = mx / CAMILLERI_ENVELOPE_MAG
-        pos = "INSIDE" if mx < CAMILLERI_ENVELOPE_MAG else "OUTSIDE"
+        pos = ("BELOW tested amplitude" if mx < CAMILLERI_ENVELOPE_MAG
+               else "ABOVE tested amplitude")
         print(f"{name}:\n  offset-removed max|dmu| = {mx:.3f} mag "
-              f"({rel:.2f}x envelope) -> {pos}\n")
-    print("Caveats: the envelope was established with FLRW-family reference")
-    print("simulations; formal coverage of non-FLRW functional forms is an")
-    print("extrapolation, and the pre-BBC endpoint's fit may sit differently.")
+              f"({rel:.2f}x the tested ~0.15 mag scale) -> {pos}\n")
+    print("Caveats: amplitude comparison only, not the pointwise Fig-4e shape")
+    print("containment test (the named upgrade); the Camilleri envelope used")
+    print("FLRW-family reference simulations, so non-FLRW coverage is inferential.")
 
 
 if __name__ == "__main__":

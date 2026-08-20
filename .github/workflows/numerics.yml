@@ -20,22 +20,40 @@ jobs:
       - name: Bracket headline
         run: |
           cd src && python bracket.py | tee /tmp/bracket.log
-          grep -q "SWING = +11.7" /tmp/bracket.log
+          grep -q "L_BBC = released - preBBC = -11.7" /tmp/bracket.log
           grep -q "Delta chi2 (B - A) = +1.1" /tmp/bracket.log
           grep -q "Delta chi2 (B - A) = +12.8" /tmp/bracket.log
+      - name: All-1829 official-sample variant
+        run: |
+          cd src && BRACKET_ALL_1829=1 python bracket.py | tee /tmp/b1829.log
+          grep -q "L_BBC = released - preBBC = -11.7" /tmp/b1829.log
+          grep -q "Delta chi2 (B - A) = +1.1" /tmp/b1829.log
+      - name: Robustness variants
+        run: |
+          cd src && python robustness.py | tee /tmp/rob.log
+          grep -q "stat-only" /tmp/rob.log
+          grep -Eq "stat-only.+released: D=\+0\.4.+uncorrected: D=\+30\.0" /tmp/rob.log
+          grep -Eq "DES-only.+released: D=\+6\.5.+uncorrected: D=\+9\.9" /tmp/rob.log
       - name: Projection identity
         run: |
           cd src && python projection.py | tee /tmp/proj.log
           grep -q "rho_C = -0.068" /tmp/proj.log
           grep -q "L_fixed = -10.14" /tmp/proj.log
+          grep -q "L_adapt = -1.56" /tmp/proj.log
       - name: Probes
         run: |
           cd src && python probes.py | tee /tmp/probes.log
           grep -q "beta = 3.11588" /tmp/probes.log
-      - name: Envelope
+          grep -q "EdS (Om=1, no free shape) | L_BBC = +365.3" /tmp/probes.log
+          grep -q "wCDM (w=-0.5, Om fitted) | L_BBC = -5.7" /tmp/probes.log
+          grep -qE "rho_C \[pre-BBC fits.+: -0.077" /tmp/probes.log
+      - name: Amplitude comparison
         run: |
           cd src && python envelope.py | tee /tmp/env.log
-          grep -q "INSIDE" /tmp/env.log && grep -q "OUTSIDE" /tmp/env.log
+          grep -q "max|dmu| = 0.055 mag" /tmp/env.log
+          grep -q "max|dmu| = 0.276 mag" /tmp/env.log
+          grep -q "BELOW tested amplitude" /tmp/env.log
+          grep -q "ABOVE tested amplitude" /tmp/env.log
       - name: Systematic modes
         run: |
           cd src && python bbc_systematic_modes.py | tee /tmp/modes.log

@@ -18,15 +18,26 @@ full STAT+SYS covariance (N = 1768, offset marginalized):
 
 | distance-modulus vector | Δχ² (probe − ΛCDM) |
 |---|---|
-| released `MU` (BBC-corrected) | **+1.6** (near-degenerate) |
-| reconstructed pre-BBC (`MU + biasCor_mu`) | **+13.3** |
+| released `MU` (BBC-corrected) | **+1.1** (near-degenerate) |
+| reconstructed pre-BBC (`MU + biasCor_mu`) | **+12.8** |
 
-The BBC step — computed from simulations that assume a fiducial ΛCDM
-cosmology — carries a pairwise discrimination leverage of **L_BBC = −11.7
-χ² units, seven times the released verdict**, and moves this comparison
-*toward* the probe. Second probes confirm the pattern is a property of
-wide-separation comparisons, not of this probe: Einstein–de Sitter shows
-|L| ≈ 367 (opposite sign); flat wCDM (w = −0.5) shows |L| = 5.0.
+(Official DES redshift convention — `zHEL` in the external factor, `zHD` in
+the cosmological integral; identical at quoted precision retaining all 1829
+released entries.) The BBC step — computed from simulations generated under
+a **reference** cosmology — carries a pairwise discrimination leverage of
+**L_BBC = released − preBBC = −11.7 χ² units, roughly eleven times the
+released verdict**, and moves this comparison *toward* the probe. The
+sensitivity is not unique to this probe: flat wCDM (w = −0.5) shows
+L = −5.7, and an Einstein–de Sitter control L = +365.3 (opposite sign — no
+consistent partisanship). DES has directly tested the reference-cosmology
+dependence (Camilleri et al. 2024, MNRAS 533, 2615) with simulation reruns
+spanning ~0.15 mag of distance-modulus variation and found it small; this
+probe's released-best-fit shape departs from ΛCDM by at most **0.055 mag**
+offset-removed — well below that tested amplitude (`src/envelope.py`; an
+amplitude comparison — Camilleri's formal criterion is a shape envelope,
+and the pointwise containment test is the named upgrade). The untested
+regime begins at larger departures (EdS: 0.276 mag) and with non-FLRW
+functional coverage.
 
 **What this does NOT show:** neither endpoint measures the universe
 (stripping the correction restores real survey selection — χ²/dof degrades
@@ -53,12 +64,12 @@ python src/bracket.py              # the headline table + layer characterization
 python src/robustness.py           # stat-only covariance; anchors excluded
 python src/projection.py           # rho_C = -0.068; L_fixed/adapt = -10.1/-1.6
 python src/probes.py               # EdS and wCDM second probes; Tripp errors
-python src/envelope.py             # Camilleri validated-envelope placement
+python src/envelope.py             # Camilleri amplitude comparison
 cd data && ./fetch_systematics.sh && cd ..   # 12 single-sys blocks, then:
 python src/bbc_systematic_modes.py # quadrature sensitivity to those modes
 ```
 
-Every number in the paper regenerates from these six scripts. Expected
+Every number in the paper regenerates from these seven scripts. Expected
 runtimes: seconds to ~3 minutes each.
 
 ## Falsify it

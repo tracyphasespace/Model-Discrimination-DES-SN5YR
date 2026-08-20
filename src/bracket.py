@@ -107,9 +107,10 @@ def main():
         print(f"  Delta chi2 (B - A) = {d:+.1f}  ->  "
               f"{'A (LCDM) ahead' if d > 0 else 'B ahead'}")
 
-    swing = results["uncorrected (MU + biasCor)"] - results["released"]
-    print(f"\nSWING = {swing:+.1f} chi2 units "
-          f"({abs(swing / results['released']):.0f}x the released-vector verdict)")
+    L = results["released"] - results["uncorrected (MU + biasCor)"]
+    print(f"\nL_BBC = released - preBBC = {L:+.1f} chi2 units")
+    print(f"|L_BBC| = {abs(L):.1f} "
+          f"({abs(L / results['released']):.0f}x the released-vector verdict)")
 
 
 if __name__ == "__main__":

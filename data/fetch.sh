@@ -11,3 +11,6 @@ echo "the statistical term is in MUERR_FINAL (see README.md line ~81)."
 # Raw griz light curves for all 8,293 candidates (optional; used by the
 # extended replication): rebuild from the DES public release with
 # ../tools/extract_raw_photometry.py, or fetch the cached CSV (Zenodo DOI TBD).
+# Verify frozen v1.2 hashes (raw-photometry hash covers the in-repo copy)
+( cd "$(dirname "$0")/.." && sha256sum -c data/SHA256SUMS --ignore-missing ) \
+  && echo "hash verification OK"

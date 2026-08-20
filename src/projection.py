@@ -6,8 +6,8 @@ model-separation vector, offset mode projected out), the C^-1 norms, and the
 fixed-shape vs adaptive leverage decomposition. Identity check:
 L_fixed = 2 * rho_C * |b| * |d| (exact, from the quadratic form).
 
-Expected (v1.2): rho_C = -0.065, |b| = 29.8, |d| = 2.51,
-L_fixed = -9.7, L_adapt = -2.0 (L_total = -11.7).
+Expected (v1.2, official zHD/zHEL convention): rho_C = -0.068,
+|b| = 29.76, |d| = 2.51, L_fixed = -10.1, L_adapt = -1.6 (L_total = -11.7).
 """
 import numpy as np
 from bracket import load, mu_modelB, mu_lcdm

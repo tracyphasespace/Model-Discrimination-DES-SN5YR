@@ -22,7 +22,7 @@ DATA = os.environ.get("BRACKET_DATA", os.path.join(os.path.dirname(__file__), ".
 hd = pd.read_csv(os.path.join(DATA, "DES-SN5YR_HD+MetaData.csv"))
 sel = (hd.zHD >= 0.01) & (hd.MUERR_FINAL > 0) & (hd.MUERR_FINAL <= 10)
 d = hd[sel]
-print(f"N = {sel.sum()} (published analyses use 1768)")
+print(f"N = {sel.sum()} (default diagnostic cut; the DES likelihood uses all 1829)")
 
 X = np.column_stack([d.x1, -d.c, np.ones(len(d))])
 for name, target in [
