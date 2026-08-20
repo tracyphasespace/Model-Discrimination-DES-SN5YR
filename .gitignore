@@ -1,4 +1,6 @@
 data/*.csv
 data/*.gz
 data/README.md
+!data/des_sn5yr_raw_photometry.csv.gz
+!data/SHA256SUMS
 __pycache__/
