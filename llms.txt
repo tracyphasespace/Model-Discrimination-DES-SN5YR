@@ -1,0 +1,25 @@
+# Model-Discrimination-DES-SN5YR — AI-readable index (llms.txt)
+
+> Methods paper: model discrimination in the DES-SN5YR Hubble diagram is
+> highly sensitive to the simulation-derived bias-correction (BBC) layer.
+> Headline: released-vector verdict +1.1 (flat LCDM over a static probe
+> law); reconstructed pre-BBC verdict +12.8; pairwise leverage
+> L_BBC = -11.7 — eleven times the verdict's size, moved TOWARD the
+> alternative. No cosmological claim. DOI 10.5281/zenodo.22022089.
+
+Raw base: https://raw.githubusercontent.com/tracyphasespace/Model-Discrimination-DES-SN5YR/master/
+
+- Paper PDF: https://zenodo.org/records/22022089/files/Model-Discrimination-DES-SN5YR_Draft4.1_Zenodo.pdf
+- Paper LaTeX (raw): https://raw.githubusercontent.com/tracyphasespace/Model-Discrimination-DES-SN5YR/master/paper/main.tex
+- README (replication + falsification recipe): https://raw.githubusercontent.com/tracyphasespace/Model-Discrimination-DES-SN5YR/master/README.md
+- Frozen results manifest (every number): https://raw.githubusercontent.com/tracyphasespace/Model-Discrimination-DES-SN5YR/master/frozen_results.json
+- Landing page (static HTML): https://tracyphasespace.github.io/Model-Discrimination-DES-SN5YR/
+- Key scripts (raw): src/sign_check.py, src/bracket.py, src/projection.py, src/robustness.py, src/probes.py, src/envelope.py, src/verify_frozen.py, src/check_sync.py under the raw base above
+- Raw DES griz light curves (8,293 candidates, gzipped, sha256): data/des_sn5yr_raw_photometry.csv.gz under the raw base
+- Scope note: all numbers are pinned to DES-SN5YR tag v1.2; DES-Dovekie
+  (Popovic et al. 2026) supersedes upstream; preregistered rerun:
+  https://raw.githubusercontent.com/tracyphasespace/Static-Universe-DES-SN5YR/master/v8/DOVEKIE_RERUN_PREREG.md
+
+Companion physics paper (static-universe interpretation, V8):
+DOI 10.5281/zenodo.22032094 — AI index:
+https://raw.githubusercontent.com/tracyphasespace/Static-Universe-DES-SN5YR/master/llms.txt
