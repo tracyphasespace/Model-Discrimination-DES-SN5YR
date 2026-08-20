@@ -107,8 +107,17 @@ HEAD now carries the Dovekie products). Every number in this paper is a
 statement about the **frozen v1.2 release** — all fetches here are
 pinned at tag v1.2, so the results remain exactly reproducible. A
 pre-registered rerun of the model comparison on the Dovekie vector
-(frozen estimator, reading bands committed before data inspection) lives
-in the [companion repository](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR/blob/master/v8/DOVEKIE_RERUN_PREREG.md).
+(frozen estimator, reading bands committed before data inspection) has
+been **executed** — `python3 src/dovekie_rerun.py --unblind` reproduces
+it (v1.2 validation gate included): **Delta chi2 = +1.8** on N = 1820
+(recovered Omega_m = 0.330 matches the published Dovekie value), i.e.
+the near-degeneracy is robust to the recalibration per the
+pre-committed reading bands. Secondary registered measurement: the
+BBC-layer leverage on this comparison fell from **-11.7 (v1.2) to -2.4
+(Dovekie)** — released and pre-correction margins are now same-sign and
+both small, materially reducing this paper's correction-dominance
+concern in the new release. Registration + result:
+[companion repository](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR/blob/master/v8/DOVEKIE_RERUN_PREREG.md).
 
 ## Companion paper
 
