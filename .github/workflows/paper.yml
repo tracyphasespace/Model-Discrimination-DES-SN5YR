@@ -1,0 +1,28 @@
+name: paper
+on:
+  push:
+    paths: ['paper/**', '.github/workflows/paper.yml']
+  pull_request:
+    paths: ['paper/**']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder gate
+        run: |
+          if grep -En '\[FINAL RUN\]|\[repository URL\]|\[OSF URL\]|\?\?' paper/main.tex; then
+            echo "Unresolved manuscript placeholder"; exit 1
+          fi
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper
+          latexmk_use_lualatex: false
+          args: -pdf -interaction=nonstopmode -halt-on-error
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: manuscript-pdf
+          path: paper/main.pdf
