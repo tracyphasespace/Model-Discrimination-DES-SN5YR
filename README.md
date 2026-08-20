@@ -97,6 +97,19 @@ DES-SN5YR data © the Dark Energy Survey Collaboration, used per their public
 release. We thank the collaboration for a release detailed enough to make
 independent tests like this one possible. Code: MIT.
 
+## Scope note: DES-Dovekie supersession (2026-08-20)
+
+DES has superseded the original SN5YR cosmology products with the
+recalibrated **DES-Dovekie** analysis (Popovic et al. 2026,
+arXiv:2511.07517; flat-ΛCDM Ωm = 0.330 ± 0.015 after cross-calibration
+and SALT3 retraining; the upstream `des-science/DES-SN5YR` repository
+HEAD now carries the Dovekie products). Every number in this paper is a
+statement about the **frozen v1.2 release** — all fetches here are
+pinned at tag v1.2, so the results remain exactly reproducible. A
+pre-registered rerun of the model comparison on the Dovekie vector
+(frozen estimator, reading bands committed before data inspection) lives
+in the [companion repository](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR/blob/master/v8/DOVEKIE_RERUN_PREREG.md).
+
 ## Companion paper
 
 *A Static-Universe Two-Channel Photon Propagation Model Confronted with
