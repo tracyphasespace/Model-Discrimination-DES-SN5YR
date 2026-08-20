@@ -1,5 +1,22 @@
 # Model Discrimination in DES-SN5YR
 
+> **ADDENDUM (2026-08-20) — the headline number is release-specific.**
+> This paper's L_BBC = −11.7 ("eleven times the verdict") is measured on
+> DES-SN5YR **v1.2**, which DES has since superseded with the
+> recalibrated **DES-Dovekie** release (Popovic et al. 2026). Our
+> pre-registered rerun on Dovekie (`src/dovekie_rerun.py`, registration
+> + result [here](https://github.com/tracyphasespace/Static-Universe-DES-SN5YR/blob/master/v8/DOVEKIE_RERUN_PREREG.md))
+> finds verdict **+1.8**, pre-correction **+4.2**, **L_BBC = −2.4** — a
+> five-fold reduction. The qualitative concern survives (leverage still
+> exceeds the verdict, 1.3×); the quantitative headline does not
+> transfer to the current release. Accurate framing: the concern was
+> real for v1.2, and DES's own recalibration and SALT3 retraining
+> materially reduced it — this paper is a diagnostic that the field's
+> own improvements answered. Published number-pairs for the record:
+> v1.2 → (+1.1, +12.8, −11.7); Dovekie → (+1.8, +4.2, −2.4). A Zenodo
+> addendum version is pending (author's action).
+
+
 **How sensitive is supernova-cosmology model discrimination to the
 simulation-derived bias-correction layer?** Companion repository for
 *"Model Discrimination in the DES-SN5YR Hubble Diagram Is Highly Sensitive
