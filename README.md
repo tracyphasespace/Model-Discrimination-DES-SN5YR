@@ -97,6 +97,15 @@ DES-SN5YR data © the Dark Energy Survey Collaboration, used per their public
 release. We thank the collaboration for a release detailed enough to make
 independent tests like this one possible. Code: MIT.
 
+## Companion paper
+
+*A Static-Universe Two-Component Scattering Interpretation of DES-SN5YR
+Supernovae* (McSheery 2026, DOI
+[10.5281/zenodo.22025329](https://doi.org/10.5281/zenodo.22025329)) presents
+the propagation physics motivating this paper's probe law. The two works are
+logically independent — this repository's leverage measurement makes no
+cosmological claim and stands regardless of that interpretation.
+
 ## Paper
 
 `paper/main.tex` is the canonical manuscript (Draft 4.1, LaTeX end-to-end;
